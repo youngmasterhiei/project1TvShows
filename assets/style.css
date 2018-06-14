@@ -1,10 +1,11 @@
-#mainContent{
+#mainContentContainer{
     background-color: gray;
     height: 800px;
 }
 
+
 footer{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -20,10 +21,20 @@ footer{
     border-bottom-color: lightgray;
 }
 .mainContentStyle{
-    margin-top: 15%;
+    margin-top: 4%;
     border-style: solid;
     border-width: 2;
 }
 .mainContentHeader{
     text-align: center;
+}
+.searchContentStyle {
+    margin-top: 2%;
+}
+.imageStyle {
+    width: 300px;
+    height: auto;
+}
+.float {
+    float: left;
 }
