@@ -38,3 +38,8 @@ footer{
 .float {
     float: left;
 }
+
+.resizeImage{
+    width: 200px;
+    height: auto;
+}
