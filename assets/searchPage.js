@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     $("#tvShowSearchSubmit").on("click", function () {
 
         event.preventDefault();
@@ -16,10 +15,12 @@ $(document).ready(function () {
                 for (var i = 0; i < response.results.length; i++) {
 
                     console.log(response);
+                    
                     var image = $("<img>");
                     var title = response.results[i].name;
                     image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
                     image.addClass("imageStyle");
+                    // var eachImageDiv = $("<button class='imageButton'><div></button>");
 
                     var eachImageDiv = $("<div>");
                     var imageDiv = $("<div>").addClass(" float");
@@ -30,6 +31,14 @@ $(document).ready(function () {
                     imageDiv.append(eachImageDiv);
                     imageDiv.addClass("float");
                     $("#mainContent").append(eachImageDiv);
+
+
+                    $(image).on("click", function (){
+
+                            console.log(this);
+
+                    });
+
 
                 };
 
