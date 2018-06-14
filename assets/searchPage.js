@@ -158,6 +158,20 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", "#purchase", function(){
+var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow";
+
+
+        $.ajax({
+            url: tvShowPurchaseQuery,
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+            //    var purchaseData =  JSON.parse(response);
+                console.log(response);
+            }
+    });
+});
 
 
 
