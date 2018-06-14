@@ -3,6 +3,7 @@ $(document).ready(function () {
     var test = "";
     $("#tvShowSearchSubmit").on("click", function () {
 
+
         event.preventDefault();
         var tvShow = $("#tvShowSearchInput").val().trim();
         var tvShowQuery = "https://api.themoviedb.org/4/search/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&query=" + tvShow;
@@ -44,6 +45,8 @@ $(document).ready(function () {
                     $(image).on("click", function () {
                         console.log(this);
                         $("#mainContent").empty();
+                        $("#altNavPosition").empty();
+
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
@@ -62,7 +65,19 @@ $(document).ready(function () {
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#altNavPosition").append(altNav);
 
+                        $(document).on("click", "#mainDisplay", function () {
 
+
+                            $("#mainContent").empty();
+                            $("#altNavPosition").empty();
+
+
+                            $(mainContentDiv).append("Show: " + title + "<br>");
+                            $(mainContentDiv).append(image);
+
+                            $("#mainContent").append(mainContentDiv);
+                            $("#altNavPosition").append(altNav);
+                        });
                     });
 
 
@@ -96,16 +111,51 @@ $(document).ready(function () {
             for (var i = 0; i < response.items.length; i++) {
                 console.log(response);
                 var videoIds = response.items[i].id.videoId;
-                var frame = $("<iframe width='640' height='360' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
+                var frame = $("<iframe width='355' height='200' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
                 $("#mainContent").append(frame);
             }
 
-            });
+        });
 
 
 
 
 
+    });
+    $(document).on("click", "#news", function () {
+
+
+
+        event.preventDefault();
+        $("#mainContent").empty();
+
+
+        var tvShowNewsQuery = "https://newsapi.org/v2/everything?q=" + test + "&sources=bbc-news,the-huffington-post&apiKey=7d5dfd55160e485e8d9ec889b85e0bef ";
+
+        $.ajax({
+            url: tvShowNewsQuery,
+            method: "GET",
+            success: function (response) {
+                console.log(response);
+                for (var i = 0; i < 7; i++) {
+
+                    var articleTitle = response.articles[i].title;
+                    var articleDescription = response.articles[i].description;
+                    var articleUrl = response.articles[i].url;
+                    var mainContentDiv = $("<div>");
+                    var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a>");
+                    $(mainContentDiv).append("Title: " + articleTitle + "<br>");
+                    $(mainContentDiv).append(articleDescription);
+
+                    $(mainContentDiv).append(link);
+                    $("#mainContent").append(mainContentDiv);
+
+
+                }
+            }, error: function () {
+                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+            }
+        });
     });
 
 
