@@ -22,8 +22,7 @@ footer{
 }
 .mainContentStyle{
     margin-top: 4%;
-    border-style: solid;
-    border-width: 2;
+   
 }
 .mainContentHeader{
     text-align: center;
@@ -37,4 +36,16 @@ footer{
 }
 .float {
     float: left;
+}
+
+.resizeImage{
+    width: 200px;
+    height: auto;
+}
+.altNavStyle {
+    margin-top: 2%;
+}
+a{
+    color: white;
+    font-size: 18px;
 }
