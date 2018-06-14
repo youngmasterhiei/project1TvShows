@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var show = [];
+    var test = "";
     $("#tvShowSearchSubmit").on("click", function () {
 
         event.preventDefault();
@@ -28,7 +29,6 @@ $(document).ready(function () {
                     image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
                     image.addClass("imageStyle");
                     image.attr(show[i])
-                    // var eachImageDiv = $("<button class='imageButton'><div></button>");
 
                     var eachImageDiv = $("<div>");
                     var imageDiv = $("<div>").addClass(" float");
@@ -47,8 +47,9 @@ $(document).ready(function () {
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
+                        test = title + " tv show";
                         var summary = $(this).attr("overview");
-                        
+
                         var mainContentDiv = $("<div>");
 
                         $(mainContentDiv).addClass("float");
@@ -58,9 +59,12 @@ $(document).ready(function () {
 
                         $(mainContentDiv).append("Overview: " + summary);
                         $("#mainContent").append(mainContentDiv);
+                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        $("#altNavPosition").append(altNav);
 
 
                     });
+
 
 
                 };
@@ -71,6 +75,40 @@ $(document).ready(function () {
         });
 
     });
+
+    $(document).on("click", "#highlights", function () {
+
+
+
+
+        $("#mainContent").empty();
+
+        var highlightVideos = {
+            part: 'snippet',
+            key: 'AIzaSyAfOEz01Vv4pWi9EtqUDb8Z5nlthL3mjA0',
+            type: "video",
+            q: test,
+            maxResults: 5
+        };
+        url = 'https://www.googleapis.com/youtube/v3/search';
+
+        $.getJSON(url, highlightVideos, function (response) {
+            for (var i = 0; i < response.items.length; i++) {
+                console.log(response);
+                var videoIds = response.items[i].id.videoId;
+                var frame = $("<iframe width='640' height='360' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
+                $("#mainContent").append(frame);
+            }
+
+            });
+
+
+
+
+
+    });
+
+
 
 
 
