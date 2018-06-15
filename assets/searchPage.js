@@ -172,14 +172,22 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
             //    var purchaseData =  JSON.parse(response);
            
                 console.log(response);
-                var collectionCost = response.results.collectionPrice;
-                var collectionImage = response.results.artworkUrl100;
+                for(i=0; i<response.results.length; i++){
+                var collectionCost = response.results[i].collectionPrice;
+                var collectionImage = response.results[i].artworkUrl100;
+                var collectionName = response.results[i].collectionName;
                 var image = $("<img>").attr("src", collectionImage);
-                var track = response.results.trackViewUrl;
+                
+                var track = response.results[i].trackViewUrl;
                 var mainContentDiv = $("<div>");
-                mainContentDiv.append(image);
-                $("#mainContent").append(mainContentDiv);
-
+                var eachSeasonDiv = $("<div>");
+                eachSeasonDiv.append(collectionName);
+                eachSeasonDiv.append(image);
+                eachSeasonDiv.append("$" + collectionCost);
+                $("#mainContent").append(eachSeasonDiv);
+                $("#mainContent").filter();
+                $("mainContent").sort();
+                }
 
 
             
@@ -188,6 +196,13 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
 });
 
 
+
+// eachImageDiv.append("Title: " + title);
+// eachImageDiv.append(image);
+
+// eachImageDiv.addClass("card float");
+// imageDiv.append(eachImageDiv);
+// $("#mainContent").append(eachImageDiv);
 
 
 });
