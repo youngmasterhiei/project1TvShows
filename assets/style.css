@@ -53,3 +53,16 @@ a{
     width: 200px;
     height: auto;
 }
+.trendingDiv{
+    width: 260px;
+    height: auto;
+    float:left;
+    display: inline;
+    padding: 10px;
+}
+.trendingDiv img {
+    width: 200px;
+    height:auto;
+    float: left;
+
+}

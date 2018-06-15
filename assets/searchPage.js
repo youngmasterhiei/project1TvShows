@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var show = [];
+    var collection = [];
     var test = "";
     $("#tvShowSearchSubmit").on("click", function () {
 
@@ -14,6 +15,10 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
                 $("#mainContent").empty();
+                var header = $("<h3>Click on the poster you want</h3>" + "<br>");
+
+                $("#altNavPosition").append(header);
+
                 for (var i = 0; i < response.results.length; i++) {
 
                     console.log(response);
@@ -38,6 +43,7 @@ $(document).ready(function () {
 
                     eachImageDiv.addClass("card float");
                     imageDiv.append(eachImageDiv);
+
                     $("#mainContent").append(eachImageDiv);
 
 
@@ -50,7 +56,7 @@ $(document).ready(function () {
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
-                        test = title + " tv show";
+                         test = title + " tv show";
                         var summary = $(this).attr("overview");
 
                         var mainContentDiv = $("<div>");
@@ -63,7 +69,8 @@ $(document).ready(function () {
                         $(mainContentDiv).append("Overview: " + summary);
                         $("#mainContent").append(mainContentDiv);
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
-                        $("#altNavPosition").append(altNav);
+
+                        $("#altNavPosition").append(altNav );
 
                         $(document).on("click", "#mainDisplay", function () {
 
@@ -173,20 +180,34 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
            
                 console.log(response);
                 for(i=0; i<response.results.length; i++){
+
+                    collection[i] = {
+                        collectionName: response.results[i].collectionName,
+                        collectionCost:  response.results[i].collectionPrice,
+                        collectionImage: response.results[i].artworkUrl100,
+                        
+
+                    };
+
+                var artistId = response.results[i].artistId;
                 var collectionCost = response.results[i].collectionPrice;
                 var collectionImage = response.results[i].artworkUrl100;
                 var collectionName = response.results[i].collectionName;
                 var image = $("<img>").attr("src", collectionImage);
                 
+                image.attr(collection[i]);
+
                 var track = response.results[i].trackViewUrl;
                 var mainContentDiv = $("<div>");
                 var eachSeasonDiv = $("<div>");
                 eachSeasonDiv.append(collectionName);
                 eachSeasonDiv.append(image);
                 eachSeasonDiv.append("$" + collectionCost);
+               
+                collection.sort();
+                console.log(collection);
                 $("#mainContent").append(eachSeasonDiv);
-                $("#mainContent").filter();
-                $("mainContent").sort();
+                // $("#mainContent").filter();
                 }
 
 

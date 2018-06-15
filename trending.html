@@ -8,6 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    
 
 
 </head>
@@ -22,11 +23,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="search.html">Home
-                    <span class="sr-only">(current)</span>
-                </a>
-                <a class="nav-item nav-link" href="trending.html">Trending</a>
-                <a class="nav-item nav-link" href="random.html">Random</a>
+                    <a class="nav-item nav-link active" href="search.html">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="search.html">Search</a>
+    
+                    <a class="nav-item nav-link" href="trending.html">Trending</a>
+                    <a class="nav-item nav-link" href="random.html">Random</a>
+                    <a class="nav-item nav-link" href="genre.html">Genre</a>
 
             </div>
         </div>
@@ -36,7 +38,8 @@
 
     <div class="container">
 
-
+        <button type="button" id="trendingBtn">Show Trending</button>
+        <button type="button" id="previousBtn">Show Previous Trending</button>
         <div class="row">
 
             <!-- <div class="col-lg-1"></div> -->
@@ -47,7 +50,7 @@
                 <div id="displayTrendingTvShows">
                     
                 </div>
-
+               
             </div>
 
             <!-- <div class="col-lg-1"></div> -->
@@ -58,6 +61,20 @@
 
 
     </div>
+
+
+
+    <footer>Copyright </footer>
+
+
+    <script type="text/javascript" src="assets/trendingPage.js"></script>
+
+
+</body>
+
+<!--    I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY         onfocus="this.value=''"  onblur="this.value=''"    onload="createStartingAnimals()"          -->
+
+</html>
 
 
 
