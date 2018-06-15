@@ -110,7 +110,7 @@ $(document).ready(function () {
             key: 'AIzaSyAfOEz01Vv4pWi9EtqUDb8Z5nlthL3mjA0',
             type: "video",
             q: test,
-            maxResults: 5
+            maxResults: 10
         };
         url = 'https://www.googleapis.com/youtube/v3/search';
 
