@@ -49,3 +49,7 @@ a{
     color: white;
     font-size: 18px;
 }
+.purchaseImageResize{
+    width: 200px;
+    height: auto;
+}

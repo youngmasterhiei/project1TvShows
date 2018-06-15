@@ -159,7 +159,9 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#purchase", function(){
-var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow";
+        $("#mainContent").empty();
+
+var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
 
 
         $.ajax({
@@ -168,7 +170,19 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
             dataType: "json",
             success: function (response) {
             //    var purchaseData =  JSON.parse(response);
+           
                 console.log(response);
+                var collectionCost = response.results.collectionPrice;
+                var collectionImage = response.results.artworkUrl100;
+                var image = $("<img>").attr("src", collectionImage);
+                var track = response.results.trackViewUrl;
+                var mainContentDiv = $("<div>");
+                mainContentDiv.append(image);
+                $("#mainContent").append(mainContentDiv);
+
+
+
+            
             }
     });
 });
