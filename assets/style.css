@@ -1,6 +1,6 @@
 #mainContentContainer{
     background-color: gray;
-    height: 800px;
+    height: auto;
 }
 
 
@@ -28,6 +28,9 @@ footer{
     text-align: center;
 }
 .searchContentStyle {
+    margin-top: 2%;
+}
+.loginStyle {
     margin-top: 2%;
 }
 .imageStyle {
