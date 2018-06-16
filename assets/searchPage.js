@@ -58,6 +58,7 @@ $(document).ready(function () {
                         var title = $(this).attr("title");
                          test = title + " tv show";
                         var summary = $(this).attr("overview");
+                        var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDiv = $("<div>");
 
@@ -69,6 +70,7 @@ $(document).ready(function () {
                         $(mainContentDiv).append("Overview: " + summary);
                         $("#mainContent").append(mainContentDiv);
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        $("#mainContent").append(addToWatchListButton);
 
                         $("#altNavPosition").append(altNav );
 
@@ -81,6 +83,7 @@ $(document).ready(function () {
 
                             $(mainContentDiv).append("Show: " + title + "<br>");
                             $(mainContentDiv).append(image);
+                            
 
                             $("#mainContent").append(mainContentDiv);
                             $("#altNavPosition").append(altNav);
@@ -217,6 +220,16 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
 });
 
 
+
+$(document).on("click", "#addToWatchList", function(){
+
+
+    var showItem = test;
+    var listItem = $("<li></li>");
+    listItem.append(showItem);
+    $("#watchList").append(listItem);
+
+});
 
 // eachImageDiv.append("Title: " + title);
 // eachImageDiv.append(image);

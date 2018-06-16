@@ -21,7 +21,8 @@ function addShow(){
 }
 
 function removeShow(){
-    $("#watchList").remove(this.listItem)
+    $("#watchList").remove(this.listItem);
+    
 }
 
 
@@ -30,17 +31,18 @@ function removeShow(){
         event.preventDefault();
         event.stopPropagation();
     
-        var username = $("#username").val();
+        var email = $("#email").val();
         var password = $("#password").val();
-        var credential = firebase.auth.EmailAuthProvider.credential(username, password);
+        var username = $("username").val();
+        var credential = firebase.auth.EmailAuthProvider.credential(email, password);
         var auth = firebase.auth();
         var currentUser = auth.currentUser;
 
         $("#password").val("");
         $("#username").val("");
-        console.log(username + password);
+        console.log(email + password);
   
-        firebase.auth().signInWithEmailAndPassword(username, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(firebaseUser) {
             $("#displayLoginStatus").html(username + "has logged in");
 
@@ -59,11 +61,13 @@ $("#addUser").on("click", function(){
 
 
     var username = $("#username").val();
+    var email = $("#username").val();
+
     var password = $("#password").val();
 
     $("#password").val("");
     $("#username").val("");
-    firebase.auth().createUserWithEmailAndPassword(username, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(function(firebaseUser) {
         $("#displayLoginStatus").html(username + "was created");
 
