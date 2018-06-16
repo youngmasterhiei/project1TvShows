@@ -13,6 +13,16 @@ $(document).ready(function () {
 firebase.initializeApp(config);
 
 
+function addShow(){
+    var showItem = $("#addToWatchList").val();
+    var listItem = $("<li></li>");
+    listItem.append(showItem);
+    $("#watchList").append(listItem);
+}
+
+function removeShow(){
+    $("#watchList").remove(this.listItem)
+}
 
 
 
@@ -63,7 +73,50 @@ $("#addUser").on("click", function(){
     });
 
     
+
+
 });
+
+
+
+$("#signOut").on("click", function(){
+    
+    firebase.auth().signOut()
+    .then(function(firebaseUser) {
+        $("#displayLoginStatus").html(username + " has signed out");
+
+    })
+    .catch(function (err) {
+        $("#displayLoginStatus").html("Uhhh... this is weird. Something went wrong, please try to signout again...?");
+    });
+
+
+
+});
+
+$("#guestLogin").on("click", function(){
+    firebase.auth().signInAnonymously()
+    .then(function(firebaseUser) {
+        $("#displayLoginStatus").html("You are now signed in as guest");
+
+    })
+    .catch(function(error) {
+        $("#displayLoginStatus").html("Something went wrong, please try again.");
+
+    });
+
+
+
+});
+
+
+
+
+
+
+
+
+
 
 
 
