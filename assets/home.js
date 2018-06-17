@@ -13,6 +13,13 @@ $(document).ready(function () {
 firebase.initializeApp(config);
 
 
+var ref = firebase.database().ref("data-modeling");
+var loginsRef = ref.child("userWriteable/loginQueue");
+var accountsRef = ref.child("userReadable/accounts");
+
+var userWatchList = [];
+
+
 function addShow(){
     var showItem = $("#addToWatchList").val();
     var listItem = $("<li></li>");
@@ -37,6 +44,8 @@ function removeShow(){
         var credential = firebase.auth.EmailAuthProvider.credential(email, password);
         var auth = firebase.auth();
         var currentUser = auth.currentUser;
+        var messagesRef = ref.child("userWriteable/messageQueue");
+
 
         $("#password").val("");
         $("#username").val("");
@@ -115,14 +124,66 @@ $("#guestLogin").on("click", function(){
 
 
 
+loginsRef.on("child_added", function (snapshot){
+    console.log("login queue received", snapshot.val());
+    var user = snapshot.val();
+    var userRef = snapshot.val();
+    
+    user.lastLogin = Date.now();
+    
+    accountsRef.child(user.uid).update(user)
+    .then(function (){
+        return userRef.remove();
+    });
+    
+    
+    
+    });
 
 
+firebase.auth().onAuthStateChanged(function(user){
 
 
+    user = user;
+    if (user) {
+        var loginQueueRef = firebase.database().ref('/data-modeling/userWriteable/loginQueue');
+        var userLoginRef = loginQueueRef.child(user.uid);
+        console.log(userLoginRef.toString(), user);
+        userLoginRef.set({
+            email: user.email,
+            uid: user.uid,
+            
+        })
+        .catch(function (event){
+            console.log("login error", event)
+        });
+    }
+})
+
+function watchList (){
+    if(!user) return console.log("not logged in");
 
 
+var messageQueueRef = firebase.database().ref("/data-modeling/userWriteable/messageQueue");
+userMessageRef = messageQueueRef.child(user.uid);
+userMessageRef.set({
+    email: user.email,
+    messageText: messageText
+});
+};
 
 
+messagesRef.on("child_added", function (snapshot){
+    var messagesRef = snapshot.ref;
+    var uid = snapshot.key;
+    var message = snapshot.val();
+    var usermessages = ref.child("userReadable/messages").child(uid);
 
+    message.timestamp = Date.now();
+    userMessages.push(message)
+    .then(function (){
+        return messagesRef.remove();
+    })
+})
 
 });
