@@ -202,7 +202,7 @@ $(document).ready(function () {
     $(document).on("click", "#purchase", function(){
         $("#mainContent").empty();
 
-var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
+var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason&sort=tvSeasonTerm";
 
 
         $.ajax({

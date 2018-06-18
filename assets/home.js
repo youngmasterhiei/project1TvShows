@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 
-var showItem ="";
+    var showItem = [];
 
     var email = "";
     var password = "";
@@ -100,24 +100,31 @@ var showItem ="";
         if (currentUser) {
             console.log(currentUser.uid);
 
-            var userID = ref.child(currentUser.uid);
             dataReference = currentUser.uid;
+            var userID = ref.child(currentUser.uid);
 
-            localStorage.setItem(currentUser.uid, dataReference);
+            var watchID = ref.child(currentUser.uid +"/watchlist");
+
+
 
 
             userID.update({
                 email: currentUser.email,
-                uid: currentUser.uid,
-                watchlist: watchlist
+                uid: currentUser.uid
+
             });
 
-            userID.on("value", function(snapshot){
-                var showItem = snapshot.val().showItem;
-                $("#watchList").append("<li>" + snapshot.val().showItem + "</li>");
-                
-                });
+           
+            watchID.once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var key = childSnapshot.key;
+                    var childData = childSnapshot.val();              
+                    var showItem = childSnapshot.val().showItem;
+                    $("#watchList").append("<li>" + showItem + "</li>");
 
+
+                });
+            });
         }
     });
 
@@ -131,28 +138,35 @@ var showItem ="";
 
         var showItem = watchListName;
         var listItem = $("<li></li>");
-        // listItem.append(showItem);
-        // $("#watchList").append(listItem);
+        listItem.append(showItem);
+        $("#watchList").append(listItem);
 
 
-console.log(listItem);
-        var userID = ref.child(dataReference);
 
-        userID.update({
-            showItem: showItem
+        var watchID = ref.child(dataReference +"/watchlist");
 
-        });
+    
 
-userID.on("value", function(snapshot){
+            watchID.push({
+                showItem: showItem,
 
-// $("#watchList").append("<li>" + snapshot.val().showItem + "</li>");
+            });
 
-});
+            // var userID = ref.child(dataReference);
+            // var watchID = ref.child(dataReference +"/watchlist");
+            // watchID.once("value").then(function(snapshot) {
+            //     snapshot.forEach(function(childSnapshot) {
+            //         var key = childSnapshot.key;
+            //         var childData = childSnapshot.val();              
+            //         var showItem = childSnapshot.val().showItem;
+            //         $("#watchList").append(showItem + "<br>");
 
 
+            //     });
+            // });
     });
 
- 
+
 
 
     // database.ref().on("value", function (snapshot) {
