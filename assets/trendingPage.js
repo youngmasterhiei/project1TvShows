@@ -69,7 +69,14 @@ $(document).ready(function(){
                     var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                     var title = $(this).attr("title");
                      test = title + " tv show";
+
+                     var watchListName = title;
+
+
+                     localStorage.setItem("title", watchListName);
+
                     var summary = $(this).attr("overview");
+                    var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                     var mainContentDiv = $("<div>");
 
@@ -81,6 +88,7 @@ $(document).ready(function(){
                     $(mainContentDiv).append("Overview: " + summary);
                     $("#mainContent").append(mainContentDiv);
                     var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                    $("#mainContent").append(addToWatchListButton);
 
                     $("#altNavPosition").append(altNav );
 

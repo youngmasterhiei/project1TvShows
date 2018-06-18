@@ -152,41 +152,13 @@ $(document).ready(function () {
 
             });
 
-            // var userID = ref.child(dataReference);
-            // var watchID = ref.child(dataReference +"/watchlist");
-            // watchID.once("value").then(function(snapshot) {
-            //     snapshot.forEach(function(childSnapshot) {
-            //         var key = childSnapshot.key;
-            //         var childData = childSnapshot.val();              
-            //         var showItem = childSnapshot.val().showItem;
-            //         $("#watchList").append(showItem + "<br>");
-
-
-            //     });
-            // });
+       
     });
 
 
 
 
-    // database.ref().on("value", function (snapshot) {
-    //     // Change the HTML
-    //     $("#playerOneStats").text(snapshot.val().statsP1);
-    //     $("#playerTwoStats").text(snapshot.val().statsP2);
-
-    //     buttonLockOn = snapshot.val().buttonLockOn;
-    //     firstPlayerChosen = snapshot.val().firstPlayerChosen;
-    //     firstPlayerTurn = snapshot.val().firstPlayerTurn;
-
-
-    // database.ref("players/playerOne").on("value", function (snapshot) {
-    //     players.playerOne.name = snapshot.val().name;
-    //     players.playerOne.choice = snapshot.val().choice;
-
-    //     $("#playerOneName").text(snapshot.val().name);
-    //     $("#displayPlayerOneChoice").text(snapshot.val().choice);
-
-    // });
+   
 
 
 });

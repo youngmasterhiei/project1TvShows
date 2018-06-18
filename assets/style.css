@@ -14,8 +14,11 @@ footer{
     left: 0;
     right: 0;
     padding-top: 20px;
-    background-color: lightgray;
+    background-color: white;
     text-align: center;
+    border-top-style: solid;
+    border-top-width: 3;
+    border-top-color: lightgray;
 }
 .navStyle{
     margin-bottom: 1%;

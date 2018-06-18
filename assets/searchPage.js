@@ -14,8 +14,8 @@ $(document).ready(function () {
     var currentUser = "";
     var userID = "";
     var watchlist = "";
-    
-    
+
+
     // var ref = firebase.database().ref("users");
     // var userID = ref.child(currentUser.uid);
 
@@ -80,11 +80,11 @@ $(document).ready(function () {
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
-                         test = title + " tv show";
+                        test = title + " tv show";
                         var watchListName = title;
 
 
-                         localStorage.setItem("title", watchListName);
+                        localStorage.setItem("title", watchListName);
 
 
 
@@ -103,7 +103,7 @@ $(document).ready(function () {
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
-                        $("#altNavPosition").append(altNav );
+                        $("#altNavPosition").append(altNav);
 
                         $(document).on("click", "#mainDisplay", function () {
 
@@ -114,7 +114,7 @@ $(document).ready(function () {
 
                             $(mainContentDiv).append("Show: " + title + "<br>");
                             $(mainContentDiv).append(image);
-                            
+
 
                             $("#mainContent").append(mainContentDiv);
                             $("#altNavPosition").append(altNav);
@@ -199,10 +199,10 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("click", "#purchase", function(){
+    $(document).on("click", "#purchase", function () {
         $("#mainContent").empty();
 
-var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason&sort=tvSeasonTerm";
+        var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason&sort=tvSeasonTerm";
 
 
         $.ajax({
@@ -210,74 +210,74 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
             method: "GET",
             dataType: "json",
             success: function (response) {
-            //    var purchaseData =  JSON.parse(response);
-           
+                //    var purchaseData =  JSON.parse(response);
+
                 console.log(response);
-                for(i=0; i<response.results.length; i++){
+                for (i = 0; i < response.results.length; i++) {
 
                     collection[i] = {
                         collectionName: response.results[i].collectionName,
-                        collectionCost:  response.results[i].collectionPrice,
+                        collectionCost: response.results[i].collectionPrice,
                         collectionImage: response.results[i].artworkUrl100,
-                        
+
 
                     };
 
-                var artistId = response.results[i].artistId;
-                var collectionCost = response.results[i].collectionPrice;
-                var collectionImage = response.results[i].artworkUrl100;
-                var collectionName = response.results[i].collectionName;
-                var image = $("<img>").attr("src", collectionImage);
-                
-                image.attr(collection[i]);
+                    var artistId = response.results[i].artistId;
+                    var collectionCost = response.results[i].collectionPrice;
+                    var collectionImage = response.results[i].artworkUrl100;
+                    var collectionName = response.results[i].collectionName;
+                    var image = $("<img>").attr("src", collectionImage);
 
-                var track = response.results[i].trackViewUrl;
-                var mainContentDiv = $("<div>");
-                var eachSeasonDiv = $("<div>");
-                eachSeasonDiv.append(collectionName);
-                eachSeasonDiv.append(image);
-                eachSeasonDiv.append("$" + collectionCost);
-               
-                collection.sort();
-                console.log(collection);
-                $("#mainContent").append(eachSeasonDiv);
-                // $("#mainContent").filter();
+                    image.attr(collection[i]);
+
+                    var track = response.results[i].trackViewUrl;
+                    var mainContentDiv = $("<div>");
+                    var eachSeasonDiv = $("<div>");
+                    eachSeasonDiv.append(collectionName);
+                    eachSeasonDiv.append(image);
+                    eachSeasonDiv.append("$" + collectionCost);
+
+                    collection.sort();
+                    console.log(collection);
+                    $("#mainContent").append(eachSeasonDiv);
+                    // $("#mainContent").filter();
                 }
 
 
-            
+
             }
+        });
     });
-});
 
 
 
-// $(document).on("click", "#addToWatchList", function(){
+    // $(document).on("click", "#addToWatchList", function(){
 
 
-//     var showItem = test;
-//     var listItem = $("<li></li>");
-//     listItem.append(showItem);
-//     $("#watchList").append(listItem);
+    //     var showItem = test;
+    //     var listItem = $("<li></li>");
+    //     listItem.append(showItem);
+    //     $("#watchList").append(listItem);
 
-//     var dataReference = localStorage.getItem(currentUser.uid);
-//     // var userID = localStorage.getItem(ref.child(cUser));
-//     // var cUser = localStorage.getItem(cUser);
-//     var userID = ref.child(dataReference);
+    //     var dataReference = localStorage.getItem(currentUser.uid);
+    //     // var userID = localStorage.getItem(ref.child(cUser));
+    //     // var cUser = localStorage.getItem(cUser);
+    //     var userID = ref.child(dataReference);
 
-//     userID.update({
-//         listItem: listItem
- 
-//     });
+    //     userID.update({
+    //         listItem: listItem
 
-// });
+    //     });
 
-// eachImageDiv.append("Title: " + title);
-// eachImageDiv.append(image);
+    // });
 
-// eachImageDiv.addClass("card float");
-// imageDiv.append(eachImageDiv);
-// $("#mainContent").append(eachImageDiv);
+    // eachImageDiv.append("Title: " + title);
+    // eachImageDiv.append(image);
+
+    // eachImageDiv.addClass("card float");
+    // imageDiv.append(eachImageDiv);
+    // $("#mainContent").append(eachImageDiv);
 
 
 });
