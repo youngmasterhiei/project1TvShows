@@ -1,3 +1,7 @@
+body {
+    background: url('images/cloudBG.jpg') no-repeat center center fixed;
+   }
+   
 #mainContentContainer{
     background-color: gray;
     height: auto;

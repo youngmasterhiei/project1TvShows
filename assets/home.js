@@ -1,6 +1,16 @@
 $(document).ready(function () {
 
 
+var showItem ="";
+
+    var email = "";
+    var password = "";
+    var credential = "";
+    var auth = "";
+    var currentUser = "";
+
+    var watchlist = "";
+    var dataReference = "";
     var config = {
         apiKey: "AIzaSyBF0-HGi0c3tguSJlJzuqIWqCo6pEhHqyI",
         authDomain: "tv-show-website.firebaseapp.com",
@@ -10,180 +20,159 @@ $(document).ready(function () {
         messagingSenderId: "617203917896"
     };
 
-firebase.initializeApp(config);
+    firebase.initializeApp(config);
 
-
-var ref = firebase.database().ref("data-modeling");
-var loginsRef = ref.child("userWriteable/loginQueue");
-var accountsRef = ref.child("userReadable/accounts");
-
-var userWatchList = [];
-
-
-function addShow(){
-    var showItem = $("#addToWatchList").val();
-    var listItem = $("<li></li>");
-    listItem.append(showItem);
-    $("#watchList").append(listItem);
-}
-
-function removeShow(){
-    $("#watchList").remove(this.listItem);
-    
-}
-
-
-
+    var ref = firebase.database().ref("users");
     $("#loginSubmit").on("click", function () {
         event.preventDefault();
         event.stopPropagation();
-    
-        var email = $("#email").val();
-        var password = $("#password").val();
-        var username = $("username").val();
+
+        var email = $("#loginEmail").val();
+        var password = $("#loginPassword").val();
         var credential = firebase.auth.EmailAuthProvider.credential(email, password);
         var auth = firebase.auth();
-        var currentUser = auth.currentUser;
-        var messagesRef = ref.child("userWriteable/messageQueue");
+        currentUser = auth.currentUser;
 
+        if (!email || !password) {
+            return console.log("email and pass are required");
 
-        $("#password").val("");
-        $("#username").val("");
-        console.log(email + password);
-  
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(function(firebaseUser) {
-            $("#displayLoginStatus").html(username + "has logged in");
+        }
 
-        })
-        .catch(function(error) {
-            $("#displayLoginStatus").html("email and password are required");
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("signIn error", error);
 
         });
-    
-    });
-
-
-$("#addUser").on("click", function(){
-    event.preventDefault();
-    event.stopPropagation();
-
-
-    var username = $("#username").val();
-    var email = $("#username").val();
-
-    var password = $("#password").val();
-
-    $("#password").val("");
-    $("#username").val("");
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(function(firebaseUser) {
-        $("#displayLoginStatus").html(username + "was created");
-
-    })
-    .catch(function(error) {
-        $("#displayLoginStatus").html("email and password are required");
-    });
-
-    
-
-
-});
-
-
-
-$("#signOut").on("click", function(){
-    
-    firebase.auth().signOut()
-    .then(function(firebaseUser) {
-        $("#displayLoginStatus").html(username + " has signed out");
-
-    })
-    .catch(function (err) {
-        $("#displayLoginStatus").html("Uhhh... this is weird. Something went wrong, please try to signout again...?");
-    });
-
-
-
-});
-
-$("#guestLogin").on("click", function(){
-    firebase.auth().signInAnonymously()
-    .then(function(firebaseUser) {
-        $("#displayLoginStatus").html("You are now signed in as guest");
-
-    })
-    .catch(function(error) {
-        $("#displayLoginStatus").html("Something went wrong, please try again.");
 
     });
 
+    $("#signUp").on("click", function () {
+        event.preventDefault();
+        event.stopPropagation();
 
 
-});
+        var email = $("#signUpEmail").val();
+        var password = $("#signUpPassword").val();
+        var credential = firebase.auth.EmailAuthProvider.credential(email, password);
+        var auth = firebase.auth();
+        currentUser = auth.currentUser;
+        if (!email || !password) {
+            return console.log("email and password required");
+
+        }
 
 
-
-loginsRef.on("child_added", function (snapshot){
-    console.log("login queue received", snapshot.val());
-    var user = snapshot.val();
-    var userRef = snapshot.val();
-    
-    user.lastLogin = Date.now();
-    
-    accountsRef.child(user.uid).update(user)
-    .then(function (){
-        return userRef.remove();
-    });
-    
-    
-    
-    });
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
 
 
-firebase.auth().onAuthStateChanged(function(user){
-
-
-    user = user;
-    if (user) {
-        var loginQueueRef = firebase.database().ref('/data-modeling/userWriteable/loginQueue');
-        var userLoginRef = loginQueueRef.child(user.uid);
-        console.log(userLoginRef.toString(), user);
-        userLoginRef.set({
-            email: user.email,
-            uid: user.uid,
-            
         })
-        .catch(function (event){
-            console.log("login error", event)
+
+
+
+            .catch(function (error) {
+                console.log("register error", error);
+
+
+
+
+
+            });
+
+
+
+
+    });
+
+
+
+    $("#signOut").on("click", function () {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        firebase.auth().signOut();
+
+
+    });
+    firebase.auth().onAuthStateChanged(function (currentUser) {
+        if (currentUser) {
+            console.log(currentUser.uid);
+
+            var userID = ref.child(currentUser.uid);
+            dataReference = currentUser.uid;
+
+            localStorage.setItem(currentUser.uid, dataReference);
+
+
+            userID.update({
+                email: currentUser.email,
+                uid: currentUser.uid,
+                watchlist: watchlist
+            });
+
+            userID.on("value", function(snapshot){
+                var showItem = snapshot.val().showItem;
+                $("#watchList").append("<li>" + snapshot.val().showItem + "</li>");
+                
+                });
+
+        }
+    });
+
+
+
+
+
+    $(document).on("click", "#addToWatchList", function () {
+        var watchListName = localStorage.getItem("title");
+
+
+        var showItem = watchListName;
+        var listItem = $("<li></li>");
+        // listItem.append(showItem);
+        // $("#watchList").append(listItem);
+
+
+console.log(listItem);
+        var userID = ref.child(dataReference);
+
+        userID.update({
+            showItem: showItem
+
         });
-    }
-})
 
-function watchList (){
-    if(!user) return console.log("not logged in");
+userID.on("value", function(snapshot){
 
+// $("#watchList").append("<li>" + snapshot.val().showItem + "</li>");
 
-var messageQueueRef = firebase.database().ref("/data-modeling/userWriteable/messageQueue");
-userMessageRef = messageQueueRef.child(user.uid);
-userMessageRef.set({
-    email: user.email,
-    messageText: messageText
 });
-};
 
 
-messagesRef.on("child_added", function (snapshot){
-    var messagesRef = snapshot.ref;
-    var uid = snapshot.key;
-    var message = snapshot.val();
-    var usermessages = ref.child("userReadable/messages").child(uid);
+    });
 
-    message.timestamp = Date.now();
-    userMessages.push(message)
-    .then(function (){
-        return messagesRef.remove();
-    })
-})
+ 
+
+
+    // database.ref().on("value", function (snapshot) {
+    //     // Change the HTML
+    //     $("#playerOneStats").text(snapshot.val().statsP1);
+    //     $("#playerTwoStats").text(snapshot.val().statsP2);
+
+    //     buttonLockOn = snapshot.val().buttonLockOn;
+    //     firstPlayerChosen = snapshot.val().firstPlayerChosen;
+    //     firstPlayerTurn = snapshot.val().firstPlayerTurn;
+
+
+    // database.ref("players/playerOne").on("value", function (snapshot) {
+    //     players.playerOne.name = snapshot.val().name;
+    //     players.playerOne.choice = snapshot.val().choice;
+
+    //     $("#playerOneName").text(snapshot.val().name);
+    //     $("#displayPlayerOneChoice").text(snapshot.val().choice);
+
+    // });
+
 
 });

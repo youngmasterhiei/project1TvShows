@@ -1,7 +1,31 @@
 $(document).ready(function () {
+
+
+
+
+
+
+
+
+    var email = "";
+    var password = "";
+    var credential = "";
+    var auth = "";
+    var currentUser = "";
+    var userID = "";
+    var watchlist = "";
+    
+    
+    // var ref = firebase.database().ref("users");
+    // var userID = ref.child(currentUser.uid);
+
     var show = [];
     var collection = [];
     var test = "";
+    var listItem = "";
+
+    var ref = firebase.database().ref("users");
+
     $("#tvShowSearchSubmit").on("click", function () {
 
 
@@ -57,6 +81,13 @@ $(document).ready(function () {
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
                          test = title + " tv show";
+                        var watchListName = title;
+
+
+                         localStorage.setItem("title", watchListName);
+
+
+
                         var summary = $(this).attr("overview");
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
@@ -221,15 +252,25 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
 
 
 
-$(document).on("click", "#addToWatchList", function(){
+// $(document).on("click", "#addToWatchList", function(){
 
 
-    var showItem = test;
-    var listItem = $("<li></li>");
-    listItem.append(showItem);
-    $("#watchList").append(listItem);
+//     var showItem = test;
+//     var listItem = $("<li></li>");
+//     listItem.append(showItem);
+//     $("#watchList").append(listItem);
 
-});
+//     var dataReference = localStorage.getItem(currentUser.uid);
+//     // var userID = localStorage.getItem(ref.child(cUser));
+//     // var cUser = localStorage.getItem(cUser);
+//     var userID = ref.child(dataReference);
+
+//     userID.update({
+//         listItem: listItem
+ 
+//     });
+
+// });
 
 // eachImageDiv.append("Title: " + title);
 // eachImageDiv.append(image);
