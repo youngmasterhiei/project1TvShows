@@ -1,125 +1,144 @@
-$(document).ready(function(){
+$(document).ready(function () {
     var show = [];
     var collection = [];
     var test = "";
     var j = 1;
-   
+
     callAPI();
     // var trendingArray = [];
-    
+
     // var trendingQuery = "https://api.themoviedb.org/3/tv/top_rated?page=1&language=en-US&api_key=3b90c41cf16ced55f6bcaedd7b858cb5"; 
 
-    $("#trendingBtn").on("click", function () { 
+    $("#trendingBtn").on("click", function () {
         j++;
         callAPI();
         console.log(j);
     })//on click
-    $("#previousBtn").on("click", function () { 
+    $("#previousBtn").on("click", function () {
         j--;
         callAPI();
         console.log(j);
-    })//on click
+    });//on click
 
-    function callAPI (){ 
-        if (j <= 1){
+    function callAPI() {
+        if (j <= 1) {
             $("#previousBtn").hide();
-        }   
-        else if(j >= 2){
+        }
+        else if (j >= 2) {
             $("#previousBtn").show();
         }
 
         var trendingQuery = "https://api.themoviedb.org/3/tv/top_rated?page=" + j + "&language=en-US&api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
-    $.ajax({
-        url: trendingQuery,
-        method: "GET",
-        success: function (response) {
-            $("#mainContent").empty();
-            for (var i = 0; i < 10; i++) {
-                show[i] = {
-                    title: response.results[i].name,
-                    overview: response.results[i].overview,
-                    poster: response.results[i].poster_path,
+        $.ajax({
+            url: trendingQuery,
+            method: "GET",
+            success: function (response) {
+                $("#mainContent").empty();
+                for (var i = 0; i < 10; i++) {
+                    show[i] = {
+                        title: response.results[i].name,
+                        overview: response.results[i].overview,
+                        poster: response.results[i].poster_path,
 
-                };
-                console.log(response);
+                    };
+                    console.log(response);
 
-                var image = $("<img>");
-                image.attr(show[i]);
+                    var image = $("<img>");
+                    image.attr(show[i]);
 
-                var title = response.results[i].name;
-                var description = response.results[i].overview; 
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
+                    var title = response.results[i].name;
+                    var description = response.results[i].overview;
+                    image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
                     image.addClass("imageStyle");
 
-                var tvContainer = $("<div>");
+                    var tvContainer = $("<div>");
                     tvContainer.append(image);
                     tvContainer.append("<h3>" + title + "</h3>");
-                    tvContainer.append("<p>" + description+"</p>");
-                $("#mainContent").append(tvContainer);
-                tvContainer.addClass("trendingDiv"); 
+                    var collapseDiv = $("<div class='row hideShow'></div>");
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
+                    collapseDiv.append(descriptionDiv);
+                    tvContainer.append(collapseDiv);
+                    $(collapseDiv).hide();
+                    // tvContainer.append("<p>" + description+"</p>");
+
+                    tvContainer.append("  <button class='btn btn-primary slideToggle' type='button' >Button with data-target</button>");
+                    $("#mainContent").append(tvContainer);
+                    tvContainer.addClass("trendingDiv");
 
 
 
-                $(image).on("click", function () {
-                    console.log(this);
-                    $("#mainContent").empty();
-                    $("#altNavPosition").empty();
-
-                    var poster = $(this).attr("poster");
-                    var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
-                    var title = $(this).attr("title");
-                     test = title + " tv show";
-
-                     var watchListName = title;
 
 
-                     localStorage.setItem("title", watchListName);
-
-                    var summary = $(this).attr("overview");
-                    var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
-
-                    var mainContentDiv = $("<div>");
-
-                    $(mainContentDiv).addClass("float");
-
-                    $(mainContentDiv).append("Show: " + title + "<br>");
-                    $(mainContentDiv).append(image);
-
-                    $(mainContentDiv).append("Overview: " + summary);
-                    $("#mainContent").append(mainContentDiv);
-                    var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
-                    $("#mainContent").append(addToWatchListButton);
-
-                    $("#altNavPosition").append(altNav );
-
-                    $(document).on("click", "#mainDisplay", function () {
-
-
+                    $(image).on("click", function () {
+                        console.log(this);
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
 
+                        var poster = $(this).attr("poster");
+                        var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
+                        var title = $(this).attr("title");
+                        test = title + " tv show";
+
+                        var watchListName = title;
+
+
+                        localStorage.setItem("title", watchListName);
+
+                        var summary = $(this).attr("overview");
+                        var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
+
+                        var mainContentDiv = $("<div>");
+
+                        $(mainContentDiv).addClass("float");
 
                         $(mainContentDiv).append("Show: " + title + "<br>");
                         $(mainContentDiv).append(image);
 
+                        $(mainContentDiv).append("Overview: " + summary);
                         $("#mainContent").append(mainContentDiv);
+                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        $("#mainContent").append(addToWatchListButton);
+
                         $("#altNavPosition").append(altNav);
+
+                        $(document).on("click", "#mainDisplay", function () {
+
+
+                            $("#mainContent").empty();
+                            $("#altNavPosition").empty();
+
+
+                            $(mainContentDiv).append("Show: " + title + "<br>");
+                            $(mainContentDiv).append(image);
+
+                            $("#mainContent").append(mainContentDiv);
+                            $("#altNavPosition").append(altNav);
+                        });
+                    });
+
+
+
+                };//forloop       
+
+                $(document).on("click", ".slideToggle", function () {
+
+                    $(this).parent().find(".hideShow").slideToggle("slow", function () {
+
                     });
                 });
 
-
-                
-            };//forloop        
-        }, error: function () {
-            alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
-        }
-    });
+            }, error: function () {
+                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+            }
+        });
     };//callapi
 
-$(document).on("click", "#highlights", function () {
 
 
-debugger;
+    $(document).on("click", "#highlights", function () {
+
+
+        debugger;
 
         $("#mainContent").empty();
 
@@ -183,10 +202,10 @@ debugger;
         });
     });
 
-    $(document).on("click", "#purchase", function(){
+    $(document).on("click", "#purchase", function () {
         $("#mainContent").empty();
 
-var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
+        var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
 
 
         $.ajax({
@@ -194,54 +213,54 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
             method: "GET",
             dataType: "json",
             success: function (response) {
-            //    var purchaseData =  JSON.parse(response);
-           
+                //    var purchaseData =  JSON.parse(response);
+
                 console.log(response);
-                for(i=0; i<response.results.length; i++){
+                for (i = 0; i < response.results.length; i++) {
 
                     collection[i] = {
                         collectionName: response.results[i].collectionName,
-                        collectionCost:  response.results[i].collectionPrice,
+                        collectionCost: response.results[i].collectionPrice,
                         collectionImage: response.results[i].artworkUrl100,
-                        
+
 
                     };
 
-                var artistId = response.results[i].artistId;
-                var collectionCost = response.results[i].collectionPrice;
-                var collectionImage = response.results[i].artworkUrl100;
-                var collectionName = response.results[i].collectionName;
-                var image = $("<img>").attr("src", collectionImage);
-                
-                image.attr(collection[i]);
+                    var artistId = response.results[i].artistId;
+                    var collectionCost = response.results[i].collectionPrice;
+                    var collectionImage = response.results[i].artworkUrl100;
+                    var collectionName = response.results[i].collectionName;
+                    var image = $("<img>").attr("src", collectionImage);
 
-                var track = response.results[i].trackViewUrl;
-                var mainContentDiv = $("<div>");
-                var eachSeasonDiv = $("<div>");
-                eachSeasonDiv.append(collectionName);
-                eachSeasonDiv.append(image);
-                eachSeasonDiv.append("$" + collectionCost);
-               
-                collection.sort();
-                console.log(collection);
-                $("#mainContent").append(eachSeasonDiv);
-                // $("#mainContent").filter();
+                    image.attr(collection[i]);
+
+                    var track = response.results[i].trackViewUrl;
+                    var mainContentDiv = $("<div>");
+                    var eachSeasonDiv = $("<div>");
+                    eachSeasonDiv.append(collectionName);
+                    eachSeasonDiv.append(image);
+                    eachSeasonDiv.append("$" + collectionCost);
+
+                    collection.sort();
+                    console.log(collection);
+                    $("#mainContent").append(eachSeasonDiv);
+                    // $("#mainContent").filter();
                 }
 
 
-            
+
             }
+        });
     });
-});
 
 
 
-// eachImageDiv.append("Title: " + title);
-// eachImageDiv.append(image);
+    // eachImageDiv.append("Title: " + title);
+    // eachImageDiv.append(image);
 
-// eachImageDiv.addClass("card float");
-// imageDiv.append(eachImageDiv);
-// $("#mainContent").append(eachImageDiv);
+    // eachImageDiv.addClass("card float");
+    // imageDiv.append(eachImageDiv);
+    // $("#mainContent").append(eachImageDiv);
 
 
 });

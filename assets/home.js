@@ -93,6 +93,7 @@ $(document).ready(function () {
         event.stopPropagation();
 
         firebase.auth().signOut();
+        location.reload();
 
 
     });
