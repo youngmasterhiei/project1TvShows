@@ -39,10 +39,8 @@ $(document).ready(function () {
                         title: response.results[i].name,
                         overview: response.results[i].overview,
                         poster: response.results[i].poster_path,
-                        description : response.results[i].overview
 
                     };
-                    console.log(response);
 
                     var image = $("<img>");
                     var title = response.results[i].name;
@@ -52,17 +50,19 @@ $(document).ready(function () {
                     image.attr(show[i]);
 
                     var collapseDiv = $("<div class='row hideShow'></div>");
-                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");               
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
+                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>");
+                  
                     var tvContainer = $("<div>");
                     tvContainer.append(image);
                     tvContainer.append("<h3>" + title + "</h3>");
-                    tvContainer.append(collapseDiv);
                     collapseDiv.append(descriptionDiv);
+                    tvContainer.append(tvDescriptionButton);
+                    tvContainer.append(collapseDiv);
 
                     $(collapseDiv).hide();
                     // tvContainer.append("<p>" + description+"</p>");
 
-                    tvContainer.append("  <button class='btn btn-primary slideToggle' type='button' >Button with data-target</button>");
                     $("#mainContent").append(tvContainer);
                     tvContainer.addClass("trendingDiv");
 
@@ -71,31 +71,26 @@ $(document).ready(function () {
 
 
                     $(image).on("click", function () {
-                        console.log(this);
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
-
+                        $(tvContainer).empty();
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
+                        var summary = $(this).attr("overview");
+
                         test = title + " tv show";
-
                         var watchListName = title;
-
 
                         localStorage.setItem("title", watchListName);
 
-                        var summary = $(this).attr("overview");
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
-                        var mainContentDiv = $("<div>");
-
-                        $(mainContentDiv).addClass("float");
-
-                        $(mainContentDiv).append("Show: " + title + "<br>");
-                        $(mainContentDiv).append(image);
-
-                        $(mainContentDiv).append("Overview: " + summary);
+                        
+                        tvContainer.append(image);
+                        tvContainer.append("<h3>" + title + "</h3>");
+                        tvContainer.append("<p>" + description + "</p>");
+                        tvContainer.addClass("searchDivClick");
                         $("#mainContent").append(tvContainer);
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
@@ -107,11 +102,11 @@ $(document).ready(function () {
 
                             $("#mainContent").empty();
                             $("#altNavPosition").empty();
-``
+                            
 
-                           
 
                             $("#mainContent").append(tvContainer);
+
                             $("#mainContent").append(addToWatchListButton);
 
                             $("#altNavPosition").append(altNav);

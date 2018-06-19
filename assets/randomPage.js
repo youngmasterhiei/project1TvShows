@@ -113,7 +113,6 @@ $(document).ready(function () {
           title: randomResponse.name,
           overview: randomResponse.overview,
           poster: randomResponse.poster_path,
-          description: response.results[i].overview
         };
         var image = $("<img>");
         var title = randomResponse.name;
@@ -122,32 +121,39 @@ $(document).ready(function () {
         image.addClass("imageStyle");
         image.attr(show[i]);
 
+        var collapseDiv = $("<div class='row hideShow'></div>");
+        var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
+        var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>");
 
-        // image.attr(show[i]);
+
 
         var eachImageDiv = $("<div>");
         eachImageDiv.append(image);
         eachImageDiv.append("<h3>"+title+"</h3>");
-        eachImageDiv.append("<p>"+description+"</p>");
-        eachImageDiv.addClass("randomDiv");
+        // eachImageDiv.append("<p>"+description+"</p>");
+        collapseDiv.append(descriptionDiv);
+        eachImageDiv.append(tvDescriptionButton);
+        eachImageDiv.append(collapseDiv);
+
+        $(collapseDiv).hide();
+
 
         $("#mainContent").append(eachImageDiv);
+        eachImageDiv.addClass("randomDiv");
 
         $(image).on("click", function () {
-          console.log(this);
           $("#mainContent").empty();
           $("#altNavPosition").empty();
 
           var poster = $(this).attr("poster");
           var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
           var title = $(this).attr("title");
-          test = title + " tv show";
-
-          var watchListName = title;
-
-
-          localStorage.setItem("title", watchListName);
           var summary = $(this).attr("overview");
+
+          test = title + " tv show";
+          var watchListName = title;
+         localStorage.setItem("title", watchListName);
+
           var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
           var mainContentDivR = $("<div>");
@@ -158,8 +164,6 @@ $(document).ready(function () {
           $("#mainContent").append(mainContentDivR);
           
 
-          var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
-          $("#mainContent").append(addToWatchListButton);
           var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
           $("#mainContent").append(addToWatchListButton);
 
@@ -181,13 +185,24 @@ $(document).ready(function () {
           });
         });
 
+      
+
       }, error: function () {
         alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
     }
 
     });
 
+    
+
   };
+
+  $(document).on("click", ".slideToggle", function () {
+
+    $(this).parent().find(".hideShow").slideToggle("slow", function () {
+
+    });
+});
   $(document).on("click", "#highlights", function () {
 
 

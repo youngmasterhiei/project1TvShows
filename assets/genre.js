@@ -22,15 +22,13 @@ $(document).ready(function () {
 
                 for (var i = 0; i < response.results.length; i++) {
 
-                    console.log(response);
                     show[i] = {
                         title: response.results[i].name,
                         overview: response.results[i].overview,
                         poster: response.results[i].poster_path,
-                        description : response.results[i].overview
                     };
 
-                    
+
                     var image = $("<img>");
                     var title = response.results[i].name;
                     var description = response.results[i].overview;
@@ -38,13 +36,25 @@ $(document).ready(function () {
                     image.addClass("imageStyle");
                     image.attr(show[i])
 
+                    var collapseDiv = $("<div class='row hideShow'></div>");
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
+                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>");
+
+
+
                     var eachImageDiv = $("<div>");
                     eachImageDiv.append(image);
-                    eachImageDiv.append("<h3>"+title+"</h3>");
-                    eachImageDiv.append("<p>"+description+"</p>");
-                    eachImageDiv.addClass("genreDiv");
+                    eachImageDiv.append("<h3>" + title + "</h3>");
+                    // eachImageDiv.append("<p>" + description + "</p>");
+                    collapseDiv.append(descriptionDiv);
+                    eachImageDiv.append(tvDescriptionButton);
+                    eachImageDiv.append(collapseDiv);
+                    
+                    $(collapseDiv).hide();
+
 
                     $("#mainContent").append(eachImageDiv);
+                    eachImageDiv.addClass("genreDiv");
 
                     $(image).on("click", function () {
                         console.log(this);
@@ -54,26 +64,27 @@ $(document).ready(function () {
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
-                         test = title + " tv show";
-
-                         var watchListName = title;
-
-
-                         localStorage.setItem("title", watchListName);
                         var summary = $(this).attr("overview");
+
+
+                        test = title + " tv show";
+                        var watchListName = title;
+
+                        localStorage.setItem("title", watchListName);
+                       
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDivG = $("<div>");
                         mainContentDivG.append(image);
-                        mainContentDivG.append("<h3>"+title+"</h3>");
-                        mainContentDivG.append("<p>"+summary+"</p>");
+                        mainContentDivG.append("<h3>" + title + "</h3>");
+                        mainContentDivG.append("<p>" + summary + "</p>");
                         mainContentDivG.addClass("genreDivClick");
                         $("#mainContent").append(mainContentDivG);
 
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
-                        $("#altNavPosition").append(altNav );
+                        $("#altNavPosition").append(altNav);
 
                         $(document).on("click", "#mainDisplay", function () {
 
@@ -81,7 +92,7 @@ $(document).ready(function () {
                             $("#mainContent").empty();
                             $("#altNavPosition").empty();
 
-                           
+
                             $("#mainContent").append(mainContentDivG);
                             $("#mainContent").append(addToWatchListButton);
 
@@ -91,9 +102,16 @@ $(document).ready(function () {
 
 
                 };
+                $(document).on("click", ".slideToggle", function () {
+
+                    $(this).parent().find(".hideShow").slideToggle("slow", function () {
+
+                    });
+                });
+
             }, error: function () {
-            alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
-        }
+                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+            }
         });
 
 
@@ -166,10 +184,10 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("click", "#purchase", function(){
+    $(document).on("click", "#purchase", function () {
         $("#mainContent").empty();
 
-var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
+        var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
 
 
         $.ajax({
@@ -177,45 +195,45 @@ var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&med
             method: "GET",
             dataType: "json",
             success: function (response) {
-            //    var purchaseData =  JSON.parse(response);
-           
+                //    var purchaseData =  JSON.parse(response);
+
                 console.log(response);
-                for(i=0; i<response.results.length; i++){
+                for (i = 0; i < response.results.length; i++) {
 
                     collection[i] = {
                         collectionName: response.results[i].collectionName,
-                        collectionCost:  response.results[i].collectionPrice,
+                        collectionCost: response.results[i].collectionPrice,
                         collectionImage: response.results[i].artworkUrl100,
-                        
+
 
                     };
 
-                var artistId = response.results[i].artistId;
-                var collectionCost = response.results[i].collectionPrice;
-                var collectionImage = response.results[i].artworkUrl100;
-                var collectionName = response.results[i].collectionName;
-                var image = $("<img>").attr("src", collectionImage);
-                
-                image.attr(collection[i]);
+                    var artistId = response.results[i].artistId;
+                    var collectionCost = response.results[i].collectionPrice;
+                    var collectionImage = response.results[i].artworkUrl100;
+                    var collectionName = response.results[i].collectionName;
+                    var image = $("<img>").attr("src", collectionImage);
 
-                var track = response.results[i].trackViewUrl;
-                var mainContentDiv = $("<div>");
-                var eachSeasonDiv = $("<div>");
-                eachSeasonDiv.append(collectionName);
-                eachSeasonDiv.append(image);
-                eachSeasonDiv.append("$" + collectionCost);
-               
-                collection.sort();
-                console.log(collection);
-                $("#mainContent").append(eachSeasonDiv);
-                // $("#mainContent").filter();
+                    image.attr(collection[i]);
+
+                    var track = response.results[i].trackViewUrl;
+                    var mainContentDiv = $("<div>");
+                    var eachSeasonDiv = $("<div>");
+                    eachSeasonDiv.append(collectionName);
+                    eachSeasonDiv.append(image);
+                    eachSeasonDiv.append("$" + collectionCost);
+
+                    collection.sort();
+                    console.log(collection);
+                    $("#mainContent").append(eachSeasonDiv);
+                    // $("#mainContent").filter();
                 }
 
 
-            
+
             }
+        });
     });
-});
 
 
 

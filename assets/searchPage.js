@@ -44,51 +44,55 @@ $(document).ready(function () {
                 $("#altNavPosition").append(header);
 
                 for (var i = 0; i < response.results.length; i++) {
-
-                    console.log(response);
                     show[i] = {
                         title: response.results[i].name,
                         overview: response.results[i].overview,
                         poster: response.results[i].poster_path,
-                        description: response.results[i].overview
 
                     };
 
-                    console.log(show);
                     var image = $("<img>");
                     var title = response.results[i].name;
                     var description = response.results[i].overview;
                     image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
                     image.addClass("imageStyle");
-                    image.attr(show[i])
+                    image.attr(show[i]);
+
+                    var collapseDiv = $("<div class='row hideShow'></div>");
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
+                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>");
+
 
                     var eachImageDiv = $("<div>");
                     eachImageDiv.append(image);
                     eachImageDiv.append("<h3>" + title + "</h3>");
-                    eachImageDiv.append("<p>" + description + "</p>");
-                    eachImageDiv.addClass("searchDiv");
+                    // eachImageDiv.append("<p>" + description + "</p>");
+                    collapseDiv.append(descriptionDiv);
+                    eachImageDiv.append(tvDescriptionButton);
+                    eachImageDiv.append(collapseDiv);
+
+                    $(collapseDiv).hide();
+
 
                     $("#mainContent").append(eachImageDiv);
+                    eachImageDiv.addClass("searchDiv");
 
 
 
                     $(image).on("click", function () {
-                        console.log(this);
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
 
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
+                        var summary = $(this).attr("overview");
+
                         test = title + " tv show";
                         var watchListName = title;
 
-
                         localStorage.setItem("title", watchListName);
 
-
-
-                        var summary = $(this).attr("overview");
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDivS = $("<div>");
@@ -122,6 +126,12 @@ $(document).ready(function () {
 
 
                 };
+                $(document).on("click", ".slideToggle", function () {
+
+                    $(this).parent().find(".hideShow").slideToggle("slow", function () {
+
+                    });
+                });
 
             }, error: function () {
                 alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
