@@ -117,12 +117,7 @@ $(document).ready(function () {
 
                 };//forloop       
 
-                $(document).on("click", ".slideToggle", function () {
-
-                    $(this).parent().find(".hideShow").slideToggle("slow", function () {
-
-                    });
-                });
+            
 
             }, error: function () {
                 alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
@@ -130,7 +125,13 @@ $(document).ready(function () {
         });
     };//callapi
 
+    $(document).on("click", ".slideToggle", function (event) {
+    
+        $(this).parent().find(".hideShow").slideToggle("slow", function () {
 
+        });
+        
+    });
 
     $(document).on("click", "#highlights", function () {
 

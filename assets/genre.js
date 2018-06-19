@@ -6,7 +6,20 @@ $(document).ready(function () {
     var j = 1;
 
     var genreSearchTerm = "";
+    $("#trendingBtn").on("click", function () {
+        $("#mainContent").empty();
 
+        j++;
+        callAPI();
+        console.log(j);
+    })//on click
+    $("#previousBtn").on("click", function () {
+        $("#mainContent").empty();
+
+        j--;
+        callAPI();
+        console.log(j);
+    });//on click
     
     $(".genreChoice").on("click", function () {
         event.preventDefault();
@@ -22,7 +35,7 @@ $(document).ready(function () {
                 $("#previousBtn").show();
             }
     
-            var tvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&sort_by=popularity.desc&with_genres=" + genreSearchTerm;
+            var tvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&page=" + j + "&sort_by=popularity.desc&with_genres=" + genreSearchTerm;
 
         $.ajax({
             url: tvShowQueryByGenre,
@@ -113,12 +126,7 @@ $(document).ready(function () {
 
 
                 };
-                $(document).on("click", ".slideToggle", function () {
-
-                    $(this).parent().find(".hideShow").slideToggle("slow", function () {
-
-                    });
-                });
+             
 
             }, error: function () {
                 alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
@@ -127,7 +135,12 @@ $(document).ready(function () {
 
     };
     
+    $(document).on("click", ".slideToggle", function () {
 
+        $(this).parent().find(".hideShow").slideToggle("slow", function () {
+
+        });
+    });
     $(document).on("click", "#highlights", function () {
 
 
