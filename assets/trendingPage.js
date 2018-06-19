@@ -71,6 +71,8 @@ $(document).ready(function () {
 
 
                     $(image).on("click", function () {
+                        $("#previousBtn").hide();
+                        $("#trendingBtn").hide();
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
                         $(tvContainer).empty();

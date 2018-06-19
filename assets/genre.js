@@ -81,6 +81,8 @@ $(document).ready(function () {
                     eachImageDiv.addClass("genreDiv");
 
                     $(image).on("click", function () {
+                        $("#previousBtn").hide();
+                        $("#trendingBtn").hide();
                         console.log(this);
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
@@ -121,6 +123,7 @@ $(document).ready(function () {
                             $("#mainContent").append(addToWatchListButton);
 
                             $("#altNavPosition").append(altNav);
+                            
                         });
                     });
 
