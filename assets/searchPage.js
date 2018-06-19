@@ -14,6 +14,7 @@ $(document).ready(function () {
     var currentUser = "";
     var userID = "";
     var watchlist = "";
+    
 
 
     // var ref = firebase.database().ref("users");
@@ -22,6 +23,7 @@ $(document).ready(function () {
     var show = [];
     var collection = [];
     var test = "";
+    var showId = "";
     var listItem = "";
 
     var ref = firebase.database().ref("users");
@@ -32,12 +34,14 @@ $(document).ready(function () {
         event.preventDefault();
         var tvShow = $("#tvShowSearchInput").val().trim();
         var tvShowQuery = "https://api.themoviedb.org/4/search/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&query=" + tvShow;
+
         $("#tvShowSearchInput").val("");
 
         $.ajax({
             url: tvShowQuery,
             method: "GET",
             success: function (response) {
+                console.log(response);
                 $("#mainContent").empty();
                 var header = $("<h3>Click on the poster you want</h3>" + "<br>");
 
@@ -48,6 +52,7 @@ $(document).ready(function () {
                         title: response.results[i].name,
                         overview: response.results[i].overview,
                         poster: response.results[i].poster_path,
+                        tvShowId: response.results[i].id
 
                     };
 
@@ -87,7 +92,10 @@ $(document).ready(function () {
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");
                         var summary = $(this).attr("overview");
+                        var tvShowId = $(this).attr("tvShowId");
+                        console.log(tvShowId);
 
+                        showId = tvShowId;
                         test = title + " tv show";
                         var watchListName = title;
 
@@ -102,7 +110,7 @@ $(document).ready(function () {
                         mainContentDivS.addClass("searchDivClick");
                         $("#mainContent").append(mainContentDivS);
                         
-                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
                         $("#altNavPosition").append(altNav);
@@ -140,6 +148,69 @@ $(document).ready(function () {
 
     });
 
+
+//start work review api
+
+
+
+
+
+
+
+
+
+    $(document).on("click", "#reviews", function () {
+
+        var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
+        // var tvShowQueryReviews = "https://api.themoviedb.org/4/search/tv/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&query=" + test;
+
+
+        $.ajax({
+            url: tvShowQueryReviews,
+            method: "GET",
+            success: function (response) {
+                $("#mainContent").empty();
+               console.log(response);
+               for (var i = 0; i < response.results.length; i++) {
+
+               var author = response.results[i].author;
+               var reviewContent = response.results[i].content;
+
+               $("#mainContent").append("<strong>" +"Author: " + author + " " + "</strong>");
+               $("#mainContent").append(reviewContent+ "<br>" + "<br>");
+
+               }
+               $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+
+              
+          
+
+            }, error: function () {
+                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+            }
+
+
+
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//end work review api
+
+    
     $(document).on("click", "#highlights", function () {
 
 
@@ -259,33 +330,6 @@ $(document).ready(function () {
     });
 
 
-
-    // $(document).on("click", "#addToWatchList", function(){
-
-
-    //     var showItem = test;
-    //     var listItem = $("<li></li>");
-    //     listItem.append(showItem);
-    //     $("#watchList").append(listItem);
-
-    //     var dataReference = localStorage.getItem(currentUser.uid);
-    //     // var userID = localStorage.getItem(ref.child(cUser));
-    //     // var cUser = localStorage.getItem(cUser);
-    //     var userID = ref.child(dataReference);
-
-    //     userID.update({
-    //         listItem: listItem
-
-    //     });
-
-    // });
-
-    // eachImageDiv.append("Title: " + title);
-    // eachImageDiv.append(image);
-
-    // eachImageDiv.addClass("card float");
-    // imageDiv.append(eachImageDiv);
-    // $("#mainContent").append(eachImageDiv);
 
 
 });
