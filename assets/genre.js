@@ -3,15 +3,26 @@ $(document).ready(function () {
     var show = [];
     var collection = [];
     var test = "";
+    var j = 1;
 
+    var genreSearchTerm = "";
+
+    
     $(".genreChoice").on("click", function () {
         event.preventDefault();
         $("#mainContent").empty();
-
-
-        var genreSearchTerm = $(this).val();
-        var tvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&sort_by=popularity.desc&with_genres=" + genreSearchTerm;
-        console.log(genreSearchTerm);
+         genreSearchTerm = $(this).val();
+        callAPI();
+    });
+        function callAPI() {
+            if (j <= 1) {
+                $("#previousBtn").hide();
+            }
+            else if (j >= 2) {
+                $("#previousBtn").show();
+            }
+    
+            var tvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&sort_by=popularity.desc&with_genres=" + genreSearchTerm;
 
         $.ajax({
             url: tvShowQueryByGenre,
@@ -114,8 +125,8 @@ $(document).ready(function () {
             }
         });
 
-
-    });
+    };
+    
 
     $(document).on("click", "#highlights", function () {
 
