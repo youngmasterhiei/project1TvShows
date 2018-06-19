@@ -39,25 +39,26 @@ $(document).ready(function () {
                         title: response.results[i].name,
                         overview: response.results[i].overview,
                         poster: response.results[i].poster_path,
+                        description : response.results[i].overview
 
                     };
                     console.log(response);
 
                     var image = $("<img>");
-                    image.attr(show[i]);
-
                     var title = response.results[i].name;
                     var description = response.results[i].overview;
                     image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
                     image.addClass("imageStyle");
+                    image.attr(show[i]);
 
+                    var collapseDiv = $("<div class='row hideShow'></div>");
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");               
                     var tvContainer = $("<div>");
                     tvContainer.append(image);
                     tvContainer.append("<h3>" + title + "</h3>");
-                    var collapseDiv = $("<div class='row hideShow'></div>");
-                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
-                    collapseDiv.append(descriptionDiv);
                     tvContainer.append(collapseDiv);
+                    collapseDiv.append(descriptionDiv);
+
                     $(collapseDiv).hide();
                     // tvContainer.append("<p>" + description+"</p>");
 
@@ -95,7 +96,7 @@ $(document).ready(function () {
                         $(mainContentDiv).append(image);
 
                         $(mainContentDiv).append("Overview: " + summary);
-                        $("#mainContent").append(mainContentDiv);
+                        $("#mainContent").append(tvContainer);
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
@@ -106,12 +107,13 @@ $(document).ready(function () {
 
                             $("#mainContent").empty();
                             $("#altNavPosition").empty();
+``
 
+                           
 
-                            $(mainContentDiv).append("Show: " + title + "<br>");
-                            $(mainContentDiv).append(image);
+                            $("#mainContent").append(tvContainer);
+                            $("#mainContent").append(addToWatchListButton);
 
-                            $("#mainContent").append(mainContentDiv);
                             $("#altNavPosition").append(altNav);
                         });
                     });

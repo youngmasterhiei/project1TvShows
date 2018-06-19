@@ -66,16 +66,15 @@ a{
     width: 200px;
     height: auto;
 }
-.trendingDiv{
+.trendingDiv, .genreDiv, .randomDiv, .searchDiv{
     width: 260px;
     height: auto;
     float:left;
     display: inline;
     padding: 10px;
 }
-.trendingDiv img {
+.trendingDiv img, .genreDiv img, .randomDiv img, .searchDiv img {
     width: 200px;
     height:auto;
     float: left;
-
 }

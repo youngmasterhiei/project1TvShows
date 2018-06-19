@@ -113,23 +113,23 @@ $(document).ready(function () {
           title: randomResponse.name,
           overview: randomResponse.overview,
           poster: randomResponse.poster_path,
-
+          description: response.results[i].overview
         };
         var image = $("<img>");
         var title = randomResponse.name;
+        var description = response.results[i].overview;
         image.attr("src", "https://image.tmdb.org/t/p/w500" + randomResponse.poster_path);
         image.addClass("imageStyle");
         image.attr(show[i]);
 
+
         // image.attr(show[i]);
 
         var eachImageDiv = $("<div>");
-        var imageDiv = $("<div>").addClass(" float");
-        eachImageDiv.append("Title: " + title);
         eachImageDiv.append(image);
-
-        eachImageDiv.addClass("card float");
-        imageDiv.append(eachImageDiv);
+        eachImageDiv.append("<h3>"+title+"</h3>");
+        eachImageDiv.append("<p>"+description+"</p>");
+        eachImageDiv.addClass("randomDiv");
 
         $("#mainContent").append(eachImageDiv);
 
@@ -150,15 +150,16 @@ $(document).ready(function () {
           var summary = $(this).attr("overview");
           var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
-          var mainContentDiv = $("<div>");
+          var mainContentDivR = $("<div>");
+          mainContentDivR.append(image);
+          mainContentDivR.append("<h3>"+title+"</h3>");
+          mainContentDivR.append("<p>"+summary+"</p>");
+          mainContentDivR.addClass("randomDivClick");
+          $("#mainContent").append(mainContentDivR);
+          
 
-          $(mainContentDiv).addClass("float");
-
-          $(mainContentDiv).append("Show: " + title + "<br>");
-          $(mainContentDiv).append(image);
-
-          $(mainContentDiv).append("Overview: " + summary);
-          $("#mainContent").append(mainContentDiv);
+          var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+          $("#mainContent").append(addToWatchListButton);
           var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
           $("#mainContent").append(addToWatchListButton);
 
@@ -171,10 +172,11 @@ $(document).ready(function () {
             $("#altNavPosition").empty();
 
 
-            $(mainContentDiv).append("Show: " + title + "<br>");
-            $(mainContentDiv).append(image);
+            
 
-            $("#mainContent").append(mainContentDiv);
+            $("#mainContent").append(mainContentDivR);
+            $("#mainContent").append(addToWatchListButton);
+
             $("#altNavPosition").append(altNav);
           });
         });
