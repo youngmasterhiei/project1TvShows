@@ -95,7 +95,7 @@ $(document).ready(function () {
                 $(".loadingSpinner").hide();
 
                 // $("#signUpAlerts").html("Must be a valid Email Address.")
-                $("#signUpAlerts").html("Signup Failed " + error.code)
+                $("#signUpAlerts").html("Signup Failed. " + errorMessage)
 
 
 
