@@ -290,47 +290,66 @@ $(document).ready(function () {
     $(document).on("click", "#purchase", function () {
         $("#mainContent").empty();
 
-        var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason&sort=tvSeasonTerm";
+        var tvShowQueryForId = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
 
 
         $.ajax({
-            url: tvShowPurchaseQuery,
+            url: tvShowQueryForId,
             method: "GET",
             dataType: "json",
             success: function (response) {
                 //    var purchaseData =  JSON.parse(response);
 
-                console.log(response);
-                for (i = 0; i < response.results.length; i++) {
-
-                    collection[i] = {
-                        collectionName: response.results[i].collectionName,
-                        collectionCost: response.results[i].collectionPrice,
-                        collectionImage: response.results[i].artworkUrl100,
+                var tvShowAppleId = response.results[0].artistId;
+             
+        var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" +tvShowAppleId+ "&sort=recent&media=tvShow&entity=tvSeason";
 
 
-                    };
+                $.ajax({
+                    url: tvShowPurchaseQuery,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                        //    var purchaseData =  JSON.parse(response);
+        
+                        console.log(response);
+                        for (i = 1; i < response.results.length; i++) {
 
-                    var artistId = response.results[i].artistId;
-                    var collectionCost = response.results[i].collectionPrice;
-                    var collectionImage = response.results[i].artworkUrl100;
-                    var collectionName = response.results[i].collectionName;
-                    var image = $("<img>").attr("src", collectionImage);
+                            collection[i] = {
+                                collectionName: response.results[i].collectionName,
+                                collectionCost: response.results[i].collectionPrice,
+                                collectionImage: response.results[i].artworkUrl100,
+            
+            
+                            };
+            
+                            var artistId = response.results[i].artistId;
+                            var collectionCost = response.results[i].collectionPrice;
+                            var collectionImage = response.results[i].artworkUrl100;
+                            var collectionName = response.results[i].collectionName;
+                            var image = $("<img>").attr("src", collectionImage);
+            
+                            image.attr(collection[i]);
+            
+                            var track = response.results[i].trackViewUrl;
+                            var mainContentDiv = $("<div>");
+                            var eachSeasonDiv = $("<div>");
+                            eachSeasonDiv.append(collectionName);
+                            eachSeasonDiv.append(image);
+                            eachSeasonDiv.append("$" + collectionCost);
+            
+                            console.log(collection);
+                            $("#mainContent").append(eachSeasonDiv);
+                        }
+        
+                         
+        
+        
+        
+                    }
+                });
 
-                    image.attr(collection[i]);
-
-                    var track = response.results[i].trackViewUrl;
-                    var mainContentDiv = $("<div>");
-                    var eachSeasonDiv = $("<div>");
-                    eachSeasonDiv.append(collectionName);
-                    eachSeasonDiv.append(image);
-                    eachSeasonDiv.append("$" + collectionCost);
-
-                    collection.sort();
-                    console.log(collection);
-                    $("#mainContent").append(eachSeasonDiv);
-                    // $("#mainContent").filter();
-                }
+                 
 
 
 
@@ -342,3 +361,61 @@ $(document).ready(function () {
 
 
 });
+
+
+
+
+
+
+
+// $(document).on("click", "#purchase", function () {
+//     $("#mainContent").empty();
+
+//     // var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
+//     var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=422863182&sort=recent&media=tvShow&entity=tvSeason";
+
+
+//     $.ajax({
+//         url: tvShowPurchaseQuery,
+//         method: "GET",
+//         dataType: "json",
+//         success: function (response) {
+//             //    var purchaseData =  JSON.parse(response);
+
+//             console.log(response);
+//             for (i = 0; i < response.results.length; i++) {
+
+//                 collection[i] = {
+//                     collectionName: response.results[i].collectionName,
+//                     collectionCost: response.results[i].collectionPrice,
+//                     collectionImage: response.results[i].artworkUrl100,
+
+
+//                 };
+
+//                 var artistId = response.results[i].artistId;
+//                 var collectionCost = response.results[i].collectionPrice;
+//                 var collectionImage = response.results[i].artworkUrl100;
+//                 var collectionName = response.results[i].collectionName;
+//                 var image = $("<img>").attr("src", collectionImage);
+
+//                 image.attr(collection[i]);
+
+//                 var track = response.results[i].trackViewUrl;
+//                 var mainContentDiv = $("<div>");
+//                 var eachSeasonDiv = $("<div>");
+//                 eachSeasonDiv.append(collectionName);
+//                 eachSeasonDiv.append(image);
+//                 eachSeasonDiv.append("$" + collectionCost);
+
+//                 collection.sort();
+//                 console.log(collection);
+//                 $("#mainContent").append(eachSeasonDiv);
+//                 // $("#mainContent").filter();
+//             }
+
+
+
+//         }
+//     });
+// });
