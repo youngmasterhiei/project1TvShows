@@ -128,7 +128,7 @@ $(document).ready(function () {
             
 
             }, error: function () {
-                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
             }
         });
     };//callapi
@@ -168,7 +168,7 @@ $(document).ready(function () {
           
 
             }, error: function () {
-                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
             }
 
 
@@ -240,7 +240,7 @@ $(document).ready(function () {
 
                 }
             }, error: function () {
-                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a newsAPI programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
             }
         });
     });

@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    $(".loadingSpinner").hide();
 
     var showItem = [];
 
@@ -26,6 +27,7 @@ $(document).ready(function () {
     $("#loginSubmit").on("click", function () {
         event.preventDefault();
         event.stopPropagation();
+        $(".loadingSpinner").show();
 
         var email = $("#loginEmail").val();
         var password = $("#loginPassword").val();
@@ -34,32 +36,44 @@ $(document).ready(function () {
         currentUser = auth.currentUser;
 
         if (!email || !password) {
-            return console.log("email and pass are required");
+            $(".loadingSpinner").hide();
+
+            $("#loginAlerts").html("Email and Password are required.");
 
         }
+        
 
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
 
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log("signIn error", error);
+            $(".loadingSpinner").hide();
+
+            $("#loginAlerts").append( "\n Invalid Email and Password Combination.");
 
         });
 
     });
 
     $("#signUp").on("click", function () {
+        $("#logInWindow").modal('hide');
         event.preventDefault();
         event.stopPropagation();
+        $(".loadingSpinner").show();
+
 
 
         var email = $("#signUpEmail").val();
         var password = $("#signUpPassword").val();
+        var passwordConfirm = $("#checkSignUpPassword").val();
+        if (password === passwordConfirm) {
         var credential = firebase.auth.EmailAuthProvider.credential(email, password);
         var auth = firebase.auth();
         currentUser = auth.currentUser;
         if (!email || !password) {
-            return console.log("email and password required");
+            $(".loadingSpinner").hide();
+
+            $("#signUpAlerts").html("Email and Password Required.")
 
         }
 
@@ -72,7 +86,9 @@ $(document).ready(function () {
 
 
             .catch(function (error) {
-                console.log("register error", error);
+                $(".loadingSpinner").hide();
+
+                $("#signUpAlerts").html("Must be a valid Email Address.")
 
 
 
@@ -81,6 +97,13 @@ $(document).ready(function () {
             });
 
 
+
+        }
+        else {
+            $(".loadingSpinner").hide();
+
+            $("#signUpAlerts").html("The passwords didn't match. Try again.")
+        }
 
 
     });
@@ -99,15 +122,23 @@ $(document).ready(function () {
     });
     firebase.auth().onAuthStateChanged(function (currentUser) {
         if (currentUser) {
+            $("#logInWindow").modal('hide');
+            $("#signUpWindow").modal('hide');
+            $(".loadingSpinner").hide();
+
+
+            $("#logInButton").hide();
+            $("#signUpButton").hide();
+            $("#signOut").show();
+           
+
             console.log(currentUser.uid);
 
             dataReference = currentUser.uid;
             var userID = ref.child(currentUser.uid);
 
             var watchID = ref.child(currentUser.uid +"/watchlist");
-
-
-
+         
 
             userID.update({
                 email: currentUser.email,
@@ -122,10 +153,15 @@ $(document).ready(function () {
                     var childData = childSnapshot.val();              
                     var showItem = childSnapshot.val().showItem;
                     $("#watchList").append("<li>" + showItem + "</li>");
-
+              
 
                 });
             });
+        }
+        else {
+            $("#signOut").hide();
+           
+
         }
     });
 
