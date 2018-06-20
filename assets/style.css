@@ -10,10 +10,6 @@ body {
 
 }
 
-.modalPadding{
-    padding-right: 3px;
-    padding-left: 3px;
-}
 
 footer{
     position: fixed;
@@ -70,17 +66,27 @@ a{
     width: 200px;
     height: auto;
 }
+
+.btn-primary {
+    margin-top: 10px;
+}
+
 .trendingDiv, .genreDiv, .randomDiv, .searchDiv{
-    width: 260px;
+    width: 350px;
     height: auto;
-    float:left;
-    display: inline;
+    float: left;
+    display: center;
     padding: 10px;
 }
 .trendingDiv img, .genreDiv img, .randomDiv img, .searchDiv img {
     width: 200px;
-    height:auto;
+    height: 300px;
     float: left;
+}
+.titleStyle{
+    font-size: 20px;
+    overflow: hidden;
+    height: 50px;
 }
 .loader {
     border: 8px solid #f3f3f3; /* Light grey */

@@ -110,14 +110,16 @@ $(document).ready(function () {
         console.log(randomResponse);
 
         show[i] = {
-          title: randomResponse.name,
-          overview: randomResponse.overview,
-          poster: randomResponse.poster_path,
+          title: response.results[i].name,
+          overview: response.results[i].overview,
+          poster: response.results[i].poster_path,
+          tvShowId: response.results[i].id
+
         };
         var image = $("<img>");
-        var title = randomResponse.name;
+        var title = response.results[i].name;
         var description = response.results[i].overview;
-        image.attr("src", "https://image.tmdb.org/t/p/w500" + randomResponse.poster_path);
+        image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
         image.addClass("imageStyle");
         image.attr(show[i]);
 
@@ -128,8 +130,11 @@ $(document).ready(function () {
 
 
         var eachImageDiv = $("<div>");
+        
+        var titleDiv = $("<h3>"+title+"</h3>");
+        titleDiv.addClass("titleStyle");
+        eachImageDiv.append(titleDiv);
         eachImageDiv.append(image);
-        eachImageDiv.append("<h3>"+title+"</h3>");
         // eachImageDiv.append("<p>"+description+"</p>");
         collapseDiv.append(descriptionDiv);
         eachImageDiv.append(tvDescriptionButton);
@@ -157,8 +162,10 @@ $(document).ready(function () {
           var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
           var mainContentDivR = $("<div>");
+          var titleDiv = $("<h3>"+title+"</h3>");
+          titleDiv.addClass("titleStyle");
+          mainContentDivR.append(titleDiv);
           mainContentDivR.append(image);
-          mainContentDivR.append("<h3>"+title+"</h3>");
           mainContentDivR.append("<p>"+summary+"</p>");
           mainContentDivR.addClass("randomDivClick");
           $("#mainContent").append(mainContentDivR);
@@ -286,69 +293,55 @@ $(document).on("click", "#purchase", function () {
 
   var tvShowQueryForId = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
 
-
   $.ajax({
-      url: tvShowQueryForId,
-      method: "GET",
-      dataType: "json",
-      success: function (response) {
-          //    var purchaseData =  JSON.parse(response);
+    url: tvShowQueryForId,
+    method: "GET",
+    dataType: "json",
+    success: function (response) {
+        var tvShowAppleId = response.results[0].artistId;
+        var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" + tvShowAppleId + "&sort=recent&media=tvShow&entity=tvSeason";
 
-          var tvShowAppleId = response.results[0].artistId;
-       
-  var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" +tvShowAppleId+ "&sort=recent&media=tvShow&entity=tvSeason";
+        $.ajax({
+            url: tvShowPurchaseQuery,
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                //    var purchaseData =  JSON.parse(response);
 
+                console.log(response);
+                for (i = 1; i < response.results.length; i++) {
 
-          $.ajax({
-              url: tvShowPurchaseQuery,
-              method: "GET",
-              dataType: "json",
-              success: function (response) {
-                  //    var purchaseData =  JSON.parse(response);
-  
-                  console.log(response);
-                  for (i = 1; i < response.results.length; i++) {
+                    collection[i] = {
+                        collectionName: response.results[i].collectionName,
+                        collectionCost: response.results[i].collectionPrice,
+                        collectionImage: response.results[i].artworkUrl100,
+                        collectionViewUrl: response.results[i].collectionViewUrl
+                    };
 
-                      collection[i] = {
-                          collectionName: response.results[i].collectionName,
-                          collectionCost: response.results[i].collectionPrice,
-                          collectionImage: response.results[i].artworkUrl100,
-      
-      
-                      };
-      
-                      var artistId = response.results[i].artistId;
-                      var collectionCost = response.results[i].collectionPrice;
-                      var collectionImage = response.results[i].artworkUrl100;
-                      var collectionName = response.results[i].collectionName;
-                      var image = $("<img>").attr("src", collectionImage);
-      
-                      image.attr(collection[i]);
-      
-                      var track = response.results[i].trackViewUrl;
-                      var mainContentDiv = $("<div>");
-                      var eachSeasonDiv = $("<div>");
-                      eachSeasonDiv.append(collectionName);
-                      eachSeasonDiv.append(image);
-                      eachSeasonDiv.append("$" + collectionCost);
-      
-                      console.log(collection);
-                      $("#mainContent").append(eachSeasonDiv);
-                  }
-  
-                   
-  
-  
-  
-              }
-          });
+                    var artistId = response.results[i].artistId;
+                    var collectionCost = response.results[i].collectionPrice;
+                    var collectionImage = response.results[i].artworkUrl100;
+                    var collectionName = response.results[i].collectionName;
+                    var collectionViewUrl = response.results[i].collectionViewUrl;
+                    var image = $("<img>").attr("src", collectionImage);
 
-           
+                    image.attr(collection[i]);
+                    var collectionLink = $("<a href='" + collectionViewUrl + "' target = 'blank'> View all episodes</a>");
+                    var mainContentDiv = $("<div>");
+                    var eachSeasonDiv = $("<div>");
+                    eachSeasonDiv.append(image);
+                    eachSeasonDiv.append(collectionName);
+                    
+                    eachSeasonDiv.append(collectionLink);
+                    eachSeasonDiv.append(" $" + collectionCost);
 
-
-
-      }
-  });
+                    console.log(collection);
+                    $("#mainContent").prepend(eachSeasonDiv);
+                }
+            }
+        });
+    }
+});
 });
 
 

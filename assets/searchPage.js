@@ -14,7 +14,7 @@ $(document).ready(function () {
     var currentUser = "";
     var userID = "";
     var watchlist = "";
-    
+
 
 
     // var ref = firebase.database().ref("users");
@@ -69,15 +69,16 @@ $(document).ready(function () {
 
 
                     var eachImageDiv = $("<div>");
+                    var titleDiv = $("<h3>"+title+"</h3>");
+                    titleDiv.addClass("titleStyle");
+                    eachImageDiv.append(titleDiv);
                     eachImageDiv.append(image);
-                    eachImageDiv.append("<h3>" + title + "</h3>");
                     // eachImageDiv.append("<p>" + description + "</p>");
                     collapseDiv.append(descriptionDiv);
                     eachImageDiv.append(tvDescriptionButton);
                     eachImageDiv.append(collapseDiv);
 
                     $(collapseDiv).hide();
-
 
                     $("#mainContent").append(eachImageDiv);
                     eachImageDiv.addClass("searchDiv");
@@ -104,12 +105,14 @@ $(document).ready(function () {
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDivS = $("<div>");
+                        var titleDiv = $("<h3>"+title+"</h3>");
+                        titleDiv.addClass("titleStyle");
+                        mainContentDivS.append(titleDiv);
                         mainContentDivS.append(image);
-                        mainContentDivS.append("<h3>"+title+"</h3>");
                         mainContentDivS.append("<p>"+summary+"</p>");
                         mainContentDivS.addClass("searchDivClick");
                         $("#mainContent").append(mainContentDivS);
-                        
+
                         var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
@@ -134,12 +137,7 @@ $(document).ready(function () {
 
 
                 };
-                $(document).on("click", ".slideToggle", function () {
-
-                    $(this).parent().find(".hideShow").slideToggle("slow", function () {
-
-                    });
-                });
+            
 
             }, error: function () {
                 $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
@@ -149,12 +147,12 @@ $(document).ready(function () {
     });
 
 
-//start work review api
+    $(document).on("click", ".slideToggle", function () {
 
+        $(this).parent().find(".hideShow").slideToggle("slow", function () {
 
-
-
-
+        });
+    });
 
 
 
@@ -170,20 +168,20 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
                 $("#mainContent").empty();
-               console.log(response);
-               for (var i = 0; i < response.results.length; i++) {
+                console.log(response);
+                for (var i = 0; i < response.results.length; i++) {
 
-               var author = response.results[i].author;
-               var reviewContent = response.results[i].content;
+                    var author = response.results[i].author;
+                    var reviewContent = response.results[i].content;
 
-               $("#mainContent").append("<strong>" +"Author: " + author + " " + "</strong>");
-               $("#mainContent").append(reviewContent+ "<br>" + "<br>");
+                    $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
+                    $("#mainContent").append(reviewContent + "<br>" + "<br>");
 
-               }
-               $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+                }
+                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
 
-              
-          
+
+
 
             }, error: function () {
                 $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
@@ -208,9 +206,9 @@ $(document).ready(function () {
 
 
 
-//end work review api
+    //end work review api
 
-    
+
     $(document).on("click", "#highlights", function () {
 
 
@@ -259,25 +257,25 @@ $(document).ready(function () {
                 console.log(response);
                 for (var i = 0; i < 7; i++) {
 
-                    if(response.totalResults === 0){
+                    if (response.totalResults === 0) {
                         $("#mainContent").html("There are currently no News Articles for the " + test + " please try again later or use google. " + "<h5 class='text-danger'>This message will self destruct in 5 seconds.</h5> ");
 
                     }
                     else {
 
-                   
-                    var articleTitle = response.articles[i].title;
-                    var articleDescription = response.articles[i].description;
-                    var articleUrl = response.articles[i].url;
-                    var mainContentDiv = $("<div>");
-                    var articleListItem = $("<li>");
-                    var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a><br><br>");
-                    $(mainContentDiv).append(" <li><strong>Title: </strong>" + "<u>" + articleTitle + "</u>" + "<br></li>");
-                    $(mainContentDiv).append(articleDescription + "<br>");
 
-                    $(mainContentDiv).append(link);
-                    // $(articleListItem).append(mainContentDiv);
-                    $("#mainContent").append(mainContentDiv);
+                        var articleTitle = response.articles[i].title;
+                        var articleDescription = response.articles[i].description;
+                        var articleUrl = response.articles[i].url;
+                        var mainContentDiv = $("<div>");
+                        var articleListItem = $("<li>");
+                        var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a><br><br>");
+                        $(mainContentDiv).append(" <li><strong>Title: </strong>" + "<u>" + articleTitle + "</u>" + "<br></li>");
+                        $(mainContentDiv).append(articleDescription + "<br>");
+
+                        $(mainContentDiv).append(link);
+                        // $(articleListItem).append(mainContentDiv);
+                        $("#mainContent").append(mainContentDiv);
                     }
 
                 }
@@ -298,12 +296,8 @@ $(document).ready(function () {
             method: "GET",
             dataType: "json",
             success: function (response) {
-                //    var purchaseData =  JSON.parse(response);
-
                 var tvShowAppleId = response.results[0].artistId;
-             
-        var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" +tvShowAppleId+ "&sort=recent&media=tvShow&entity=tvSeason";
-
+                var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" + tvShowAppleId + "&sort=recent&media=tvShow&entity=tvSeason";
 
                 $.ajax({
                     url: tvShowPurchaseQuery,
@@ -311,7 +305,7 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (response) {
                         //    var purchaseData =  JSON.parse(response);
-        
+
                         console.log(response);
                         for (i = 1; i < response.results.length; i++) {
 
@@ -319,40 +313,31 @@ $(document).ready(function () {
                                 collectionName: response.results[i].collectionName,
                                 collectionCost: response.results[i].collectionPrice,
                                 collectionImage: response.results[i].artworkUrl100,
-            
-            
+                                collectionViewUrl: response.results[i].collectionViewUrl
                             };
-            
+
                             var artistId = response.results[i].artistId;
                             var collectionCost = response.results[i].collectionPrice;
                             var collectionImage = response.results[i].artworkUrl100;
                             var collectionName = response.results[i].collectionName;
+                            var collectionViewUrl = response.results[i].collectionViewUrl;
                             var image = $("<img>").attr("src", collectionImage);
-            
+
                             image.attr(collection[i]);
-            
-                            var track = response.results[i].trackViewUrl;
+                            var collectionLink = $("<a href='" + collectionViewUrl + "' target = 'blank'> View all episodes</a>");
                             var mainContentDiv = $("<div>");
                             var eachSeasonDiv = $("<div>");
-                            eachSeasonDiv.append(collectionName);
                             eachSeasonDiv.append(image);
-                            eachSeasonDiv.append("$" + collectionCost);
-            
+                            eachSeasonDiv.append(collectionName);
+                            
+                            eachSeasonDiv.append(collectionLink);
+                            eachSeasonDiv.append(" $" + collectionCost);
+
                             console.log(collection);
-                            $("#mainContent").append(eachSeasonDiv);
+                            $("#mainContent").prepend(eachSeasonDiv);
                         }
-        
-                         
-        
-        
-        
                     }
                 });
-
-                 
-
-
-
             }
         });
     });
@@ -366,56 +351,3 @@ $(document).ready(function () {
 
 
 
-
-
-// $(document).on("click", "#purchase", function () {
-//     $("#mainContent").empty();
-
-//     // var tvShowPurchaseQuery = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
-//     var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=422863182&sort=recent&media=tvShow&entity=tvSeason";
-
-
-//     $.ajax({
-//         url: tvShowPurchaseQuery,
-//         method: "GET",
-//         dataType: "json",
-//         success: function (response) {
-//             //    var purchaseData =  JSON.parse(response);
-
-//             console.log(response);
-//             for (i = 0; i < response.results.length; i++) {
-
-//                 collection[i] = {
-//                     collectionName: response.results[i].collectionName,
-//                     collectionCost: response.results[i].collectionPrice,
-//                     collectionImage: response.results[i].artworkUrl100,
-
-
-//                 };
-
-//                 var artistId = response.results[i].artistId;
-//                 var collectionCost = response.results[i].collectionPrice;
-//                 var collectionImage = response.results[i].artworkUrl100;
-//                 var collectionName = response.results[i].collectionName;
-//                 var image = $("<img>").attr("src", collectionImage);
-
-//                 image.attr(collection[i]);
-
-//                 var track = response.results[i].trackViewUrl;
-//                 var mainContentDiv = $("<div>");
-//                 var eachSeasonDiv = $("<div>");
-//                 eachSeasonDiv.append(collectionName);
-//                 eachSeasonDiv.append(image);
-//                 eachSeasonDiv.append("$" + collectionCost);
-
-//                 collection.sort();
-//                 console.log(collection);
-//                 $("#mainContent").append(eachSeasonDiv);
-//                 // $("#mainContent").filter();
-//             }
-
-
-
-//         }
-//     });
-// });

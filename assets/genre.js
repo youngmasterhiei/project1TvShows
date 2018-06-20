@@ -67,8 +67,10 @@ $(document).ready(function () {
 
 
                     var eachImageDiv = $("<div>");
+                    var titleDiv = $("<h3>"+title+"</h3>");
+                    titleDiv.addClass("titleStyle");
+                    eachImageDiv.append(titleDiv);
                     eachImageDiv.append(image);
-                    eachImageDiv.append("<h3>" + title + "</h3>");
                     // eachImageDiv.append("<p>" + description + "</p>");
                     collapseDiv.append(descriptionDiv);
                     eachImageDiv.append(tvDescriptionButton);
@@ -101,8 +103,10 @@ $(document).ready(function () {
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDivG = $("<div>");
+                        var titleDiv = $("<h3>"+title+"</h3>");
+                        titleDiv.addClass("titleStyle");
+                        mainContentDivG.append(titleDiv);
                         mainContentDivG.append(image);
-                        mainContentDivG.append("<h3>" + title + "</h3>");
                         mainContentDivG.append("<p>" + summary + "</p>");
                         mainContentDivG.addClass("genreDivClick");
                         $("#mainContent").append(mainContentDivG);
@@ -231,12 +235,9 @@ $(document).ready(function () {
             method: "GET",
             dataType: "json",
             success: function (response) {
-                //    var purchaseData =  JSON.parse(response);
-
+                console.log(response);
                 var tvShowAppleId = response.results[0].artistId;
-             
-        var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" +tvShowAppleId+ "&sort=recent&media=tvShow&entity=tvSeason";
-
+                var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" + tvShowAppleId + "&sort=recent&media=tvShow&entity=tvSeason";
 
                 $.ajax({
                     url: tvShowPurchaseQuery,
@@ -244,7 +245,7 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (response) {
                         //    var purchaseData =  JSON.parse(response);
-        
+
                         console.log(response);
                         for (i = 1; i < response.results.length; i++) {
 
@@ -252,44 +253,34 @@ $(document).ready(function () {
                                 collectionName: response.results[i].collectionName,
                                 collectionCost: response.results[i].collectionPrice,
                                 collectionImage: response.results[i].artworkUrl100,
-            
-            
+                                collectionViewUrl: response.results[i].collectionViewUrl
                             };
-            
+
                             var artistId = response.results[i].artistId;
                             var collectionCost = response.results[i].collectionPrice;
                             var collectionImage = response.results[i].artworkUrl100;
                             var collectionName = response.results[i].collectionName;
+                            var collectionViewUrl = response.results[i].collectionViewUrl;
                             var image = $("<img>").attr("src", collectionImage);
-            
+
                             image.attr(collection[i]);
-            
-                            var track = response.results[i].trackViewUrl;
+                            var collectionLink = $("<a href='" + collectionViewUrl + "' target = 'blank'> View all episodes</a>");
                             var mainContentDiv = $("<div>");
                             var eachSeasonDiv = $("<div>");
-                            eachSeasonDiv.append(collectionName);
                             eachSeasonDiv.append(image);
-                            eachSeasonDiv.append("$" + collectionCost);
-            
+                            eachSeasonDiv.append(collectionName);
+                            
+                            eachSeasonDiv.append(collectionLink);
+                            eachSeasonDiv.append(" $" + collectionCost);
+
                             console.log(collection);
-                            $("#mainContent").append(eachSeasonDiv);
+                            $("#mainContent").prepend(eachSeasonDiv);
                         }
-        
-                         
-        
-        
-        
                     }
                 });
-
-                 
-
-
-
             }
         });
     });
-
 
 
 });
