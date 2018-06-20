@@ -250,7 +250,7 @@ $(document).ready(function () {
         $("#mainContent").empty();
 
 
-        var tvShowNewsQuery = "https://newsapi.org/v2/everything?q=" + test + "&sources=bbc-news,the-huffington-post&apiKey=7d5dfd55160e485e8d9ec889b85e0bef ";
+        var tvShowNewsQuery = "https://newsapi.org/v2/everything?q=" + test + "&sources=bbc-news,entertainment-weekly,buzzfeed,google-news,the-huffington,the-verge,wired-post&apiKey=7d5dfd55160e485e8d9ec889b85e0bef ";
 
         $.ajax({
             url: tvShowNewsQuery,
@@ -259,17 +259,26 @@ $(document).ready(function () {
                 console.log(response);
                 for (var i = 0; i < 7; i++) {
 
+                    if(response.totalResults === 0){
+                        $("#mainContent").html("There are currently no News Articles for the " + test + " please try again later or use google. " + "<h5 class='text-danger'>This message will self destruct in 5 seconds.</h5> ");
+
+                    }
+                    else {
+
+                   
                     var articleTitle = response.articles[i].title;
                     var articleDescription = response.articles[i].description;
                     var articleUrl = response.articles[i].url;
                     var mainContentDiv = $("<div>");
-                    var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a>");
-                    $(mainContentDiv).append("Title: " + articleTitle + "<br>");
-                    $(mainContentDiv).append(articleDescription);
+                    var articleListItem = $("<li>");
+                    var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a><br><br>");
+                    $(mainContentDiv).append(" <li><strong>Title: </strong>" + "<u>" + articleTitle + "</u>" + "<br></li>");
+                    $(mainContentDiv).append(articleDescription + "<br>");
 
                     $(mainContentDiv).append(link);
+                    // $(articleListItem).append(mainContentDiv);
                     $("#mainContent").append(mainContentDiv);
-
+                    }
 
                 }
             }, error: function () {
