@@ -47,6 +47,7 @@ $(document).ready(function () {
 
             var errorCode = error.code;
             var errorMessage = error.message;
+            console.log("register error", error);
             $(".loadingSpinner").hide();
 
             $("#loginAlerts").append( "\n Invalid Email and Password Combination.");
@@ -70,6 +71,7 @@ $(document).ready(function () {
         var credential = firebase.auth.EmailAuthProvider.credential(email, password);
         var auth = firebase.auth();
         currentUser = auth.currentUser;
+        
         if (!email || !password) {
             $(".loadingSpinner").hide();
 
@@ -86,9 +88,14 @@ $(document).ready(function () {
 
 
             .catch(function (error) {
+                var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("register error", error);
+
                 $(".loadingSpinner").hide();
 
-                $("#signUpAlerts").html("Must be a valid Email Address.")
+                // $("#signUpAlerts").html("Must be a valid Email Address.")
+                $("#signUpAlerts").html("Signup Failed " + error.code)
 
 
 
