@@ -83,7 +83,7 @@ $(document).ready(function () {
                         $("#trendingBtn").hide();
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
-                        $(tvContainer).empty();
+                        
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
                         var title = $(this).attr("title");

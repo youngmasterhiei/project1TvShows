@@ -1,11 +1,12 @@
 body {
-    background: url('images/cloudBG.jpg') no-repeat center center fixed;
+    background-color: #1f2833;
     margin-bottom: 5%;
+    color: #c5c6c7;
 
    }
    
 #mainContentContainer{
-    background-color: gray;
+    background-color:#0b0c10;
     height: auto;
 
 }
@@ -17,21 +18,21 @@ footer{
     left: 0;
     right: 0;
     padding-top: 10px;
-    background-color: white;
+    background-color:#45a29e;
     text-align: center;
     border-top-style: solid;
     border-top-width: 3;
-    border-top-color: lightgray;
+    border-top-color: #66fcf1;
 }
 .navStyle{
     margin-bottom: 1%;
-    background-color: lightgray;
+    background-color: #66fcf1;
     border-bottom-style: solid;
     border-bottom-width: 3;
-    border-bottom-color: lightgray;
+    border-bottom-color: #66fcf1;
 }
 .mainContentStyle{
-    margin-top: 4%;
+    margin-top: 2%;
    
 }
 .mainContentHeader{

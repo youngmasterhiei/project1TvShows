@@ -206,6 +206,45 @@ $(document).ready(function () {
 
 
 
+    $(document).on("click", "#reviews", function () {
+
+        var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
+        // var tvShowQueryReviews = "https://api.themoviedb.org/4/search/tv/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&query=" + test;
+
+        var imdbQueryReviews = "https://imdb.p.mashape.com/movie";
+
+        $.ajax({
+            url: imdbQueryReviews,
+            method: "GET",
+            search: test,
+            dataType: "JSON",
+            success: function (response) {
+              console.log(response)
+
+
+            }, error: function () {
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+            }
+
+
+
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //end work review api
 
 
