@@ -15,8 +15,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navStyle">
-        <p class="navbar-brand">Tv show site</p>
+    <nav class="navbar navbar-expand-lg navbar-light navStyle" style="background-color:#45a29e">
+        <a class="navbar-brand" href="home.html">
+          <img src="https://image.flaticon.com/icons/svg/167/167018.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+          Small Screen</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,7 +41,7 @@
     
  
        
-            <button id="logInButton" type='button' class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-target="#logInWindow">Log In</button>
+            <a id="logInButton" class="nav-item nav-link my-2 my-sm-0 " data-toggle="modal" data-target="#logInWindow">Log In</a>
           
             <div class="modal fade" id="logInWindow">
               <div class="modal-dialog">
@@ -122,7 +124,7 @@
                     </div>
                   </div>
                 </div>
-                <button id="signOut" class="btn btn-success my-2 my-sm-0">Log Out</button>
+                <a id="signOut" class="nav-item nav-link my-2 my-sm-0 ">Log Out</a>
 
               
             </form>

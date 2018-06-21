@@ -32,9 +32,11 @@ footer{
     border-bottom-color: #66fcf1;
 }
 .mainContentStyle{
-    margin-top: 2%;
+    margin-top: 4%;
+  
    
 }
+
 .mainContentHeader{
     text-align: center;
 }
@@ -43,6 +45,15 @@ footer{
 }
 .loginStyle {
     margin-top: 2%;
+    cursor: pointer;
+}
+#logInButton:hover{
+    color: #1f2833;
+    cursor: pointer;
+}
+#signOut:hover{
+    color: #1f2833;
+    cursor: pointer;
 }
 .imageStyle {
     width: 300px;
@@ -60,7 +71,7 @@ footer{
     margin-top: 2%;
 }
 a{
-    color: white;
+    color: #1f2833;
     font-size: 18px;
 }
 .purchaseImageResize{
@@ -73,21 +84,29 @@ a{
 }
 
 .trendingDiv, .genreDiv, .randomDiv, .searchDiv{
-    width: 350px;
+    width: 225px;
     height: auto;
     float: left;
-    display: center;
-    padding: 10px;
+    margin-left: 80px;
+    margin-right: 20px;
+    
+    
 }
 .trendingDiv img, .genreDiv img, .randomDiv img, .searchDiv img {
     width: 200px;
     height: 300px;
     float: left;
+    
+}
+.dynamicButton{
+    width: 200px;
+    margin-bottom: 6px;
 }
 .titleStyle{
     font-size: 20px;
     overflow: hidden;
     height: 50px;
+    width: 200px;
 }
 .loader {
     border: 8px solid #f3f3f3; /* Light grey */
@@ -102,4 +121,32 @@ a{
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+#addToWatchList{
+    background-color: #45a29e;
+    border-color: #1f2833;
+}
+#mainDisplay{
+    background-color: #45a29e;
+    border-color: #1f2833;
+}
+#discussion{
+    background-color: #45a29e;
+    border-color: #1f2833;
+}
+#news{
+    background-color: #45a29e;
+    border-color: #1f2833;
+}
+#highlights{
+    background-color: #45a29e;
+    border-color: #1f2833;
+}
+#purchase{
+    background-color: #45a29e;
+    border-color: #1f2833;
+}
+#reviews{
+    background-color: #45a29e;
+    border-color: #1f2833;
 }

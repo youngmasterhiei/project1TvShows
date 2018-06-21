@@ -6,19 +6,15 @@ $(document).ready(function () {
     var j = 1;
 
     callAPI();
-    // var trendingArray = [];
 
-    // var trendingQuery = "https://api.themoviedb.org/3/tv/top_rated?page=1&language=en-US&api_key=3b90c41cf16ced55f6bcaedd7b858cb5"; 
 
     $("#trendingBtn").on("click", function () {
         j++;
         callAPI();
-        console.log(j);
     })//on click
     $("#previousBtn").on("click", function () {
         j--;
         callAPI();
-        console.log(j);
     });//on click
 
     function callAPI() {
@@ -60,11 +56,9 @@ $(document).ready(function () {
                     var eachImageDiv = $("<div>");
 
                     var titleDiv = $("<h3>" + title + "</h3>");
-                    // titleDiv.addClass("titleStyle");
                     titleDiv.addClass("titleStyle");
                     eachImageDiv.append(titleDiv);
                     eachImageDiv.append(image);
-                    // eachImageDiv.append("<p>"+description+"</p>");
                     collapseDiv.append(descriptionDiv);
                     eachImageDiv.append(tvDescriptionButton);
                     eachImageDiv.append(collapseDiv);
@@ -161,7 +155,6 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
                 $("#mainContent").empty();
-               console.log(response);
                for (var i = 0; i < response.results.length; i++) {
 
                var author = response.results[i].author;
@@ -205,7 +198,6 @@ $(document).ready(function () {
 
         $.getJSON(url, highlightVideos, function (response) {
             for (var i = 0; i < response.items.length; i++) {
-                console.log(response);
                 var videoIds = response.items[i].id.videoId;
                 var frame = $("<iframe width='355' height='200' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
                 $("#mainContent").append(frame);
@@ -232,7 +224,6 @@ $(document).ready(function () {
             url: tvShowNewsQuery,
             method: "GET",
             success: function (response) {
-                console.log(response);
                 for (var i = 0; i < 7; i++) {
 
                     if(response.totalResults === 0){
@@ -252,7 +243,6 @@ $(document).ready(function () {
                     $(mainContentDiv).append(articleDescription + "<br>");
 
                     $(mainContentDiv).append(link);
-                    // $(articleListItem).append(mainContentDiv);
                     $("#mainContent").append(mainContentDiv);
                     }
 
@@ -284,7 +274,6 @@ $(document).ready(function () {
                     success: function (response) {
                         //    var purchaseData =  JSON.parse(response);
 
-                        console.log(response);
                         for (i = 1; i < response.results.length; i++) {
 
                             collection[i] = {
@@ -311,7 +300,6 @@ $(document).ready(function () {
                             eachSeasonDiv.append(collectionLink);
                             eachSeasonDiv.append(" $" + collectionCost);
 
-                            console.log(collection);
                             $("#mainContent").prepend(eachSeasonDiv);
                         }
                     }

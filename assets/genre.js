@@ -11,14 +11,12 @@ $(document).ready(function () {
 
         j++;
         callAPI();
-        console.log(j);
     })//on click
     $("#previousBtn").on("click", function () {
         $("#mainContent").empty();
 
         j--;
         callAPI();
-        console.log(j);
     });//on click
     
     $(".genreChoice").on("click", function () {
@@ -42,7 +40,6 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
 
-                console.log(response);
 
                 for (var i = 0; i < response.results.length; i++) {
 
@@ -71,7 +68,6 @@ $(document).ready(function () {
                     titleDiv.addClass("titleStyle");
                     eachImageDiv.append(titleDiv);
                     eachImageDiv.append(image);
-                    // eachImageDiv.append("<p>" + description + "</p>");
                     collapseDiv.append(descriptionDiv);
                     eachImageDiv.append(tvDescriptionButton);
                     eachImageDiv.append(collapseDiv);
@@ -85,7 +81,6 @@ $(document).ready(function () {
                     $(image).on("click", function () {
                         $("#previousBtn").hide();
                         $("#trendingBtn").hide();
-                        console.log(this);
                         $("#mainContent").empty();
                         $("#altNavPosition").empty();
 
@@ -166,7 +161,6 @@ $(document).ready(function () {
 
         $.getJSON(url, highlightVideos, function (response) {
             for (var i = 0; i < response.items.length; i++) {
-                console.log(response);
                 var videoIds = response.items[i].id.videoId;
                 var frame = $("<iframe width='355' height='200' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
                 $("#mainContent").append(frame);
@@ -193,7 +187,6 @@ $(document).ready(function () {
             url: tvShowNewsQuery,
             method: "GET",
             success: function (response) {
-                console.log(response);
                 for (var i = 0; i < 7; i++) {
 
                     if(response.totalResults === 0){
@@ -213,7 +206,6 @@ $(document).ready(function () {
                     $(mainContentDiv).append(articleDescription + "<br>");
 
                     $(mainContentDiv).append(link);
-                    // $(articleListItem).append(mainContentDiv);
                     $("#mainContent").append(mainContentDiv);
                     }
 
@@ -235,7 +227,6 @@ $(document).ready(function () {
             method: "GET",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var tvShowAppleId = response.results[0].artistId;
                 var tvShowPurchaseQuery = "https://itunes.apple.com/lookup?id=" + tvShowAppleId + "&sort=recent&media=tvShow&entity=tvSeason";
 
@@ -246,7 +237,6 @@ $(document).ready(function () {
                     success: function (response) {
                         //    var purchaseData =  JSON.parse(response);
 
-                        console.log(response);
                         for (i = 1; i < response.results.length; i++) {
 
                             collection[i] = {
@@ -273,7 +263,6 @@ $(document).ready(function () {
                             eachSeasonDiv.append(collectionLink);
                             eachSeasonDiv.append(" $" + collectionCost);
 
-                            console.log(collection);
                             $("#mainContent").prepend(eachSeasonDiv);
                         }
                     }

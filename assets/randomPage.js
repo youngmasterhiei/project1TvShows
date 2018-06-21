@@ -86,8 +86,8 @@ $(document).ready(function () {
 
 
   for (i = 0; i < 10; i++) {
+    
     var randomGenre = genres[Math.floor(Math.random() * genres.length)];
-    console.log(randomGenre);
 
     search = randomGenre.id;
     RandomTvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&with_genres=" + search;
@@ -110,16 +110,14 @@ $(document).ready(function () {
         console.log(randomResponse);
 
         show[i] = {
-          title: response.results[i].name,
-          overview: response.results[i].overview,
-          poster: response.results[i].poster_path,
-          tvShowId: response.results[i].id
-
+          title: randomResponse.name,
+          overview: randomResponse.overview,
+          poster: randomResponse.poster_path,
         };
         var image = $("<img>");
-        var title = response.results[i].name;
-        var description = response.results[i].overview;
-        image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
+        var title = randomResponse.name;
+        var description = randomResponse.overview;
+        image.attr("src", "https://image.tmdb.org/t/p/w500" + randomResponse.poster_path);
         image.addClass("imageStyle");
         image.attr(show[i]);
 
@@ -129,13 +127,14 @@ $(document).ready(function () {
 
 
 
+
+
         var eachImageDiv = $("<div>");
         
         var titleDiv = $("<h3>"+title+"</h3>");
         titleDiv.addClass("titleStyle");
         eachImageDiv.append(titleDiv);
         eachImageDiv.append(image);
-        // eachImageDiv.append("<p>"+description+"</p>");
         collapseDiv.append(descriptionDiv);
         eachImageDiv.append(tvDescriptionButton);
         eachImageDiv.append(collapseDiv);
@@ -230,7 +229,6 @@ $(document).ready(function () {
 
     $.getJSON(url, highlightVideos, function (response) {
         for (var i = 0; i < response.items.length; i++) {
-            console.log(response);
             var videoIds = response.items[i].id.videoId;
             var frame = $("<iframe width='355' height='200' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
             $("#mainContent").append(frame);
@@ -257,7 +255,6 @@ $(document).on("click", "#news", function () {
         url: tvShowNewsQuery,
         method: "GET",
         success: function (response) {
-            console.log(response);
             for (var i = 0; i < 7; i++) {
 
               if(response.totalResults === 0){
@@ -277,7 +274,6 @@ $(document).on("click", "#news", function () {
               $(mainContentDiv).append(articleDescription + "<br>");
 
               $(mainContentDiv).append(link);
-              // $(articleListItem).append(mainContentDiv);
               $("#mainContent").append(mainContentDiv);
               }
 
@@ -308,7 +304,6 @@ $(document).on("click", "#purchase", function () {
             success: function (response) {
                 //    var purchaseData =  JSON.parse(response);
 
-                console.log(response);
                 for (i = 1; i < response.results.length; i++) {
 
                     collection[i] = {
@@ -335,7 +330,6 @@ $(document).on("click", "#purchase", function () {
                     eachSeasonDiv.append(collectionLink);
                     eachSeasonDiv.append(" $" + collectionCost);
 
-                    console.log(collection);
                     $("#mainContent").prepend(eachSeasonDiv);
                 }
             }

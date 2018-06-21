@@ -15,11 +15,6 @@ $(document).ready(function () {
     var userID = "";
     var watchlist = "";
 
-
-
-    // var ref = firebase.database().ref("users");
-    // var userID = ref.child(currentUser.uid);
-
     var show = [];
     var collection = [];
     var test = "";
@@ -41,10 +36,9 @@ $(document).ready(function () {
             url: tvShowQuery,
             method: "GET",
             success: function (response) {
-                console.log(response);
                 $("#mainContent").empty();
-                var header = $("<h3>Click on the poster you want</h3>" + "<br>");
-
+                var header = $("<h4>Click on the poster to select which show</h4>" + "<br>");
+                $("#altNavPosition").empty();
                 $("#altNavPosition").append(header);
 
                 for (var i = 0; i < response.results.length; i++) {
@@ -65,7 +59,7 @@ $(document).ready(function () {
 
                     var collapseDiv = $("<div class='row hideShow'></div>");
                     var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
-                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>");
+                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>").addClass("dynamicButton");
 
 
                     var eachImageDiv = $("<div>");
@@ -73,7 +67,6 @@ $(document).ready(function () {
                     titleDiv.addClass("titleStyle");
                     eachImageDiv.append(titleDiv);
                     eachImageDiv.append(image);
-                    // eachImageDiv.append("<p>" + description + "</p>");
                     collapseDiv.append(descriptionDiv);
                     eachImageDiv.append(tvDescriptionButton);
                     eachImageDiv.append(collapseDiv);
@@ -94,7 +87,6 @@ $(document).ready(function () {
                         var title = $(this).attr("title");
                         var summary = $(this).attr("overview");
                         var tvShowId = $(this).attr("tvShowId");
-                        console.log(tvShowId);
 
                         showId = tvShowId;
                         test = title + " tv show";
@@ -105,7 +97,7 @@ $(document).ready(function () {
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDivS = $("<div>");
-                        var titleDiv = $("<h3>"+title+"</h3>");
+                        var titleDiv = $("<h3>"+title+"</h3>").trim();
                         titleDiv.addClass("titleStyle");
                         mainContentDivS.append(titleDiv);
                         mainContentDivS.append(image);
@@ -160,7 +152,6 @@ $(document).ready(function () {
     $(document).on("click", "#reviews", function () {
 
         var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
-        // var tvShowQueryReviews = "https://api.themoviedb.org/4/search/tv/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&query=" + test;
 
 
         $.ajax({
@@ -168,7 +159,6 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
                 $("#mainContent").empty();
-                console.log(response);
                 for (var i = 0; i < response.results.length; i++) {
 
                     var author = response.results[i].author;
@@ -195,21 +185,9 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     $(document).on("click", "#reviews", function () {
 
         var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
-        // var tvShowQueryReviews = "https://api.themoviedb.org/4/search/tv/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&query=" + test;
 
         var imdbQueryReviews = "https://imdb.p.mashape.com/movie";
 
@@ -219,7 +197,6 @@ $(document).ready(function () {
             search: test,
             dataType: "JSON",
             success: function (response) {
-              console.log(response)
 
 
             }, error: function () {
@@ -232,20 +209,6 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //end work review api
 
 
     $(document).on("click", "#highlights", function () {
@@ -266,7 +229,6 @@ $(document).ready(function () {
 
         $.getJSON(url, highlightVideos, function (response) {
             for (var i = 0; i < response.items.length; i++) {
-                console.log(response);
                 var videoIds = response.items[i].id.videoId;
                 var frame = $("<iframe width='355' height='200' src='https://www.youtube.com/embed/" + videoIds + "' frameborder='0' allowfullscreen></iframe>");
                 $("#mainContent").append(frame);
@@ -293,7 +255,6 @@ $(document).ready(function () {
             url: tvShowNewsQuery,
             method: "GET",
             success: function (response) {
-                console.log(response);
                 for (var i = 0; i < 7; i++) {
 
                     if (response.totalResults === 0) {
@@ -313,7 +274,6 @@ $(document).ready(function () {
                         $(mainContentDiv).append(articleDescription + "<br>");
 
                         $(mainContentDiv).append(link);
-                        // $(articleListItem).append(mainContentDiv);
                         $("#mainContent").append(mainContentDiv);
                     }
 
@@ -345,7 +305,6 @@ $(document).ready(function () {
                     success: function (response) {
                         //    var purchaseData =  JSON.parse(response);
 
-                        console.log(response);
                         for (i = 1; i < response.results.length; i++) {
 
                             collection[i] = {
@@ -372,7 +331,6 @@ $(document).ready(function () {
                             eachSeasonDiv.append(collectionLink);
                             eachSeasonDiv.append(" $" + collectionCost);
 
-                            console.log(collection);
                             $("#mainContent").prepend(eachSeasonDiv);
                         }
                     }

@@ -1,10 +1,10 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
@@ -14,8 +14,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navStyle">
-        <p class="navbar-brand">Tv show site</p>
+    <nav class="navbar navbar-expand-lg navbar-light navStyle" style="background-color:#45a29e">
+        <a class="navbar-brand" href="home.html">
+          <img src="https://image.flaticon.com/icons/svg/167/167018.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+          Small Screen</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -38,31 +40,40 @@
     
  
        
-            <button id="logInButton" type='button' class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-target="#logInWindow">Log In</button>
+            <a id="logInButton" type="link"class="nav-item nav-link my-2 my-sm-0 " data-toggle="modal" data-target="#logInWindow">Log In</a>
           
             <div class="modal fade" id="logInWindow">
               <div class="modal-dialog">
                 <div class="modal-content">
-                  <!-- header -->
                   <div class="modal-header">
+                      <h3 align="center" class="modal-title">Login Form</h3>
+
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Login Form</h3>
-                    <h3 align="center"></h3>
+                    
+                    
                   </div>
-                  <!-- body -->
-                  <div class="modal-header">
+                  <div class="modal-body">
                     <form role="form">
-                      <div class="form-group">
-                        <input id="loginEmail" class="form-control" placeholder="Email" />
-                        <input id="loginPassword" type="password" class="form-control" placeholder="Password" />
+                      <div class="form-group form">
+                       
+
+                        <input id="loginEmail" class="form-control " placeholder="Email" />
+                        
+                        <input id="loginPassword" type="password" class="form-control " placeholder="Password" />
+                        <div class="loader loadingSpinner"></div>
+
+
                       </div>
+                      
+                          <h5 class="text-danger"id="loginAlerts"></h5>
+                      
                     </form>
                   </div>
-                  <!-- footer -->
                   <div class="modal-footer">
-                    <button id="loginSubmit" type = "submit" class="btn btn-primary btn-block">Log In</button>
+                    <button id="loginSubmit" type = "submit" data-dismiss="modal" class="btn btn-primary btn-block">Log In</button>
                     <h6>Create a New Account</h6>
                     <button id ="signUpButton" type='button' class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-dismiss="modal" data-target="#signUpWindow">Sign Up</button>
+
                   </div>
           
                 </div>
@@ -73,17 +84,15 @@
 
        
 
-                <!-- <button id ="signUpButton" type='button' class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpWindow">Sign Up</button> -->
               
                 <div class="modal fade" id="signUpWindow">
                   <div class="modal-dialog">
                     <div class="modal-content">
-                      <!-- header -->
                       <div class="modal-header">
+                          <h3 class="modal-title" >Sign Up Form</h3>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title" align="center">Sign Up Form</h3>
+                        
                       </div>
-                      <!-- body -->
                       <div class="modal-header">
                         <form role="form">
                           <div class="form-group form">
@@ -97,16 +106,17 @@
                           </div>
                         </form>
                       </div>
-                      <!-- footer -->
                       <div class="modal-footer">
                         <button id="signUp" class="btn btn-primary btn-block" data-dismiss="modal">Sign Up</button>
+                        <div class="loader loadingSpinner"></div>
+
                         
                       </div>
               
                     </div>
                   </div>
                 </div>
-                <button id="signOut" class="btn btn-success my-2 my-sm-0">Log Out</button>
+                <a id="signOut" class="nav-item nav-link my-2 my-sm-0 ">Log Out</a>
 
               
             </form>
@@ -152,9 +162,9 @@
         </div>
         <div class="col-lg-2"></div>
         <div class="col-lg-8 content-justify-center">
-            <button type="button" id="previousBtn">Previous page</button>
+            <button class="btn success" id="previousBtn">Previous page</button>
 
-            <button type="button" id="trendingBtn">Next page</button>
+            <button class="btn success" id="trendingBtn">Next page</button>
           
         </div>
         <div class = "col-lg-2"></div>
@@ -175,6 +185,5 @@
 
 </body>
 
-<!--    I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY         onfocus="this.value=''"  onblur="this.value=''"    onload="createStartingAnimals()"          -->
 
 </html>

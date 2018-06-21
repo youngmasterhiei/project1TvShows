@@ -47,7 +47,6 @@ $(document).ready(function () {
 
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log("register error", error);
             $(".loadingSpinner").hide();
 
             $("#loginAlerts").append( "\n Invalid Email and Password Combination.");
@@ -90,7 +89,6 @@ $(document).ready(function () {
             .catch(function (error) {
                 var errorCode = error.code;
             var errorMessage = error.message;
-            console.log("register error", error);
 
                 $(".loadingSpinner").hide();
 
@@ -139,7 +137,6 @@ $(document).ready(function () {
             $("#signOut").show();
            
 
-            console.log(currentUser.uid);
 
             dataReference = currentUser.uid;
             var userID = ref.child(currentUser.uid);
