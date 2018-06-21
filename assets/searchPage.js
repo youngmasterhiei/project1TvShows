@@ -40,10 +40,14 @@ $(document).ready(function () {
             success: function (response) {
 
                 $("#mainContent").empty();
-                var header = $("<h4>Click on the poster to select which show</h4>" + "<br>");
                 $("#altNavPosition").empty();
-                $("#altNavPosition").append(header);
-
+                if (response.results.length === 0){
+                    var header = $("<h4>Please enter a valid search</h4>" + "<br>");
+                    $("#altNavPosition").append(header);
+                }
+else{
+    var header = $("<h4>Click on the poster to select which show</h4>" + "<br>");
+    $("#altNavPosition").append(header);
                 for (var i = 0; i < response.results.length; i++) {
                     show[i] = {
                         title: response.results[i].name,
@@ -75,9 +79,9 @@ $(document).ready(function () {
                     eachImageDiv.append(collapseDiv);
 
                     $(collapseDiv).hide();
-
                     $("#mainContent").append(eachImageDiv);
                     eachImageDiv.addClass("searchDiv");
+            
 
 
 
@@ -133,7 +137,7 @@ $(document).ready(function () {
 
                 };
             
-
+            }
             }, error: function () {
                var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
                 $("#mainContent").append(warning);
