@@ -7,6 +7,10 @@ $(document).ready(function () {
     var showId = "";
 
     var genreSearchTerm = "";
+    $("#previousBtn").hide();
+    $("#trendingBtn").hide();
+
+
     $("#trendingBtn").on("click", function () {
         $("#mainContent").empty();
 
@@ -22,6 +26,8 @@ $(document).ready(function () {
     
     $(".genreChoice").on("click", function () {
         event.preventDefault();
+        $("#trendingBtn").show();
+
         $("#mainContent").empty();
          genreSearchTerm = $(this).val();
         callAPI();
@@ -61,8 +67,8 @@ $(document).ready(function () {
                     image.attr(show[i]);
 
                     var collapseDiv = $("<div class='row hideShow'></div>");
-                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
-                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>");
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>").addClass("dynamicText");
+                    var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>").addClass("dynamicButton");
 
 
 

@@ -61,7 +61,7 @@ $(document).ready(function () {
                     image.attr(show[i]);
 
                     var collapseDiv = $("<div class='row hideShow'></div>");
-                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
+                    var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>").addClass("dynamicText");
                     var tvDescriptionButton = $("  <button class='btn btn-primary slideToggle' type='button' >Show Description</button>").addClass("dynamicButton");
 
 
