@@ -24,6 +24,7 @@ $(document).ready(function () {
     var ref = firebase.database().ref("users");
 
     $("#tvShowSearchSubmit").on("click", function () {
+
         $("#maincontent").removeClass("text-danger");
 
 
@@ -163,7 +164,16 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
                 $("#mainContent").empty();
+                console.log(response);
+                console.log(response.results.length);
+                if (response.results.length === 0) {
+                    $("#mainContent").html("There are currently no Reviews for the " + test + " please try again later or use google. ");
+
+                }
+                else {
                 for (var i = 0; i < response.results.length; i++) {
+               
+                   
 
                     var author = response.results[i].author;
                     var reviewContent = response.results[i].content;
@@ -173,11 +183,12 @@ $(document).ready(function () {
                 }
                 $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
 
-
+            }
 
 
             }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+                var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
+                $("#mainContent").append(warning);
             }
 
 

@@ -133,8 +133,8 @@ $(document).ready(function () {
             
 
             }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
-            }
+                var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
+                $("#mainContent").append(warning);            }
         });
     };//callapi
 
@@ -157,22 +157,31 @@ $(document).ready(function () {
             method: "GET",
             success: function (response) {
                 $("#mainContent").empty();
-               for (var i = 0; i < response.results.length; i++) {
+                console.log(response);
+                console.log(response.results.length);
+                if (response.results.length === 0) {
+                    $("#mainContent").html("There are currently no Reviews for " + test + " please try again later or use google. ");
 
-               var author = response.results[i].author;
-               var reviewContent = response.results[i].content;
+                }
+                else {
+                for (var i = 0; i < response.results.length; i++) {
+               
+                   
 
-               $("#mainContent").append("<strong>" +"Author: " + author + " " + "</strong>");
-               $("#mainContent").append(reviewContent+ "<br>" + "<br>");
+                    var author = response.results[i].author;
+                    var reviewContent = response.results[i].content;
 
-               }
-               $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+                    $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
+                    $("#mainContent").append(reviewContent + "<br>" + "<br>");
+                }
+                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
 
-              
-          
+            }
+
 
             }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+                var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
+                $("#mainContent").append(warning);
             }
 
 
