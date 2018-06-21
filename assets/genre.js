@@ -4,6 +4,7 @@ $(document).ready(function () {
     var collection = [];
     var test = "";
     var j = 1;
+    var showId = "";
 
     var genreSearchTerm = "";
     $("#trendingBtn").on("click", function () {
@@ -47,6 +48,8 @@ $(document).ready(function () {
                         title: response.results[i].name,
                         overview: response.results[i].overview,
                         poster: response.results[i].poster_path,
+                        tvShowId: response.results[i].id
+
                     };
 
 
@@ -55,7 +58,7 @@ $(document).ready(function () {
                     var description = response.results[i].overview;
                     image.attr("src", "https://image.tmdb.org/t/p/w500" + response.results[i].poster_path);
                     image.addClass("imageStyle");
-                    image.attr(show[i])
+                    image.attr(show[i]);
 
                     var collapseDiv = $("<div class='row hideShow'></div>");
                     var descriptionDiv = $("<div class='card card-body'><p>" + description + "</p></div>");
@@ -86,9 +89,13 @@ $(document).ready(function () {
 
                         var poster = $(this).attr("poster");
                         var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
+                        image.attr("alt", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxAvC_jMzhEU5JbW2A2zhPFDlaTZlrB6EaGilWU7Ok7nI8Wyrd");
+
                         var title = $(this).attr("title");
                         var summary = $(this).attr("overview");
+                        var tvShowId = $(this).attr("tvShowId");
 
+                        showId = tvShowId;
 
                         test = title + " tv show";
                         var watchListName = title;
@@ -106,7 +113,7 @@ $(document).ready(function () {
                         mainContentDivG.addClass("genreDivClick");
                         $("#mainContent").append(mainContentDivG);
 
-                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Reviews</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
                         $("#altNavPosition").append(altNav);
@@ -143,6 +150,40 @@ $(document).ready(function () {
 
         });
     });
+
+
+    $(document).on("click", "#reviews", function () {
+
+        var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
+      
+        $.ajax({
+            url: tvShowQueryReviews,
+            method: "GET",
+            success: function (response) {
+                $("#mainContent").empty();
+                for (var i = 0; i < response.results.length; i++) {
+      
+                    var author = response.results[i].author;
+                    var reviewContent = response.results[i].content;
+      
+                    $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
+                    $("#mainContent").append(reviewContent + "<br>" + "<br>");
+                }
+                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+      
+      
+      
+      
+            }, error: function () {
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+            }
+      
+      
+      
+        });
+      });
+
+
     $(document).on("click", "#highlights", function () {
 
 

@@ -11,10 +11,12 @@ $(document).ready(function () {
     $("#trendingBtn").on("click", function () {
         j++;
         callAPI();
+        topFunction();
     })//on click
     $("#previousBtn").on("click", function () {
         j--;
         callAPI();
+        topFunction();
     });//on click
 
     function callAPI() {
@@ -103,7 +105,7 @@ $(document).ready(function () {
                         $("#mainContent").append(mainContentDivT);
                         
               
-                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Reviews</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
               
                         $("#altNavPosition").append(altNav);
@@ -307,6 +309,12 @@ $(document).ready(function () {
             }
         });
     });
+
+//borrowed from w3schools
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
 
 });

@@ -1,6 +1,8 @@
 $(document).ready(function () {
   var search = "";
   var show = [];
+  var showId = "";
+
   var RandomTvShowQueryByGenre = "";
   var collection = [];
   var test = "";
@@ -113,6 +115,8 @@ $(document).ready(function () {
           title: randomResponse.name,
           overview: randomResponse.overview,
           poster: randomResponse.poster_path,
+          tvShowId: randomResponse.id
+
         };
         var image = $("<img>");
         var title = randomResponse.name;
@@ -153,7 +157,9 @@ $(document).ready(function () {
           var image = $("<img>").addClass("resizeImage").attr("src", "https://image.tmdb.org/t/p/w500" + poster);
           var title = $(this).attr("title");
           var summary = $(this).attr("overview");
+          var tvShowId = $(this).attr("tvShowId");
 
+          showId = tvShowId;
           test = title + " tv show";
           var watchListName = title;
          localStorage.setItem("title", watchListName);
@@ -165,12 +171,14 @@ $(document).ready(function () {
           titleDiv.addClass("titleStyle");
           mainContentDivR.append(titleDiv);
           mainContentDivR.append(image);
+          image.attr("alt", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxAvC_jMzhEU5JbW2A2zhPFDlaTZlrB6EaGilWU7Ok7nI8Wyrd");
+
           mainContentDivR.append("<p>"+summary+"</p>");
           mainContentDivR.addClass("randomDivClick");
           $("#mainContent").append(mainContentDivR);
           
 
-          var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'discussion'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+          var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Reviews</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
           $("#mainContent").append(addToWatchListButton);
 
           $("#altNavPosition").append(altNav);
@@ -211,9 +219,42 @@ $(document).ready(function () {
 
     });
 });
+
+
+
+
+
+$(document).on("click", "#reviews", function () {
+
+  var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
+
+  $.ajax({
+      url: tvShowQueryReviews,
+      method: "GET",
+      success: function (response) {
+          $("#mainContent").empty();
+          for (var i = 0; i < response.results.length; i++) {
+
+              var author = response.results[i].author;
+              var reviewContent = response.results[i].content;
+
+              $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
+              $("#mainContent").append(reviewContent + "<br>" + "<br>");
+          }
+          $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+
+
+
+
+      }, error: function () {
+          $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+      }
+
+
+
+  });
+});
   $(document).on("click", "#highlights", function () {
-
-
 
 
     $("#mainContent").empty();

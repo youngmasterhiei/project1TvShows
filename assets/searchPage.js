@@ -22,9 +22,9 @@ $(document).ready(function () {
     var listItem = "";
 
     var ref = firebase.database().ref("users");
-    $("#maincontent").removeClass("text-danger");
 
     $("#tvShowSearchSubmit").on("click", function () {
+        $("#maincontent").removeClass("text-danger");
 
 
         event.preventDefault();
@@ -107,7 +107,7 @@ $(document).ready(function () {
                         mainContentDivS.addClass("searchDivClick");
                         $("#mainContent").append(mainContentDivS);
 
-                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Discussion Board</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Reviews</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
                         $("#mainContent").append(addToWatchListButton);
 
                         $("#altNavPosition").append(altNav);
@@ -170,7 +170,6 @@ $(document).ready(function () {
 
                     $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
                     $("#mainContent").append(reviewContent + "<br>" + "<br>");
-
                 }
                 $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
 
@@ -189,28 +188,7 @@ $(document).ready(function () {
 
 
 
-    $(document).on("click", "#reviews", function () {
 
-        var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
-
-        var imdbQueryReviews = "https://imdb.p.mashape.com/movie";
-
-        $.ajax({
-            url: imdbQueryReviews,
-            method: "GET",
-            search: test,
-            dataType: "JSON",
-            success: function (response) {
-
-
-            }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
-            }
-
-
-
-        });
-    });
 
 
 
