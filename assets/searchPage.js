@@ -140,7 +140,7 @@ else{
             }
             }, error: function () {
                var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
-                $("#mainContent").append(warning);
+                $("#mainContent").html(warning);
 
             }
         });
