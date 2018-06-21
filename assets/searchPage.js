@@ -22,6 +22,7 @@ $(document).ready(function () {
     var listItem = "";
 
     var ref = firebase.database().ref("users");
+    $("#maincontent").removeClass("text-danger");
 
     $("#tvShowSearchSubmit").on("click", function () {
 
@@ -36,6 +37,7 @@ $(document).ready(function () {
             url: tvShowQuery,
             method: "GET",
             success: function (response) {
+
                 $("#mainContent").empty();
                 var header = $("<h4>Click on the poster to select which show</h4>" + "<br>");
                 $("#altNavPosition").empty();
@@ -97,7 +99,7 @@ $(document).ready(function () {
                         var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
 
                         var mainContentDivS = $("<div>");
-                        var titleDiv = $("<h3>"+title+"</h3>").trim();
+                        var titleDiv = $("<h3>"+title+"</h3>");
                         titleDiv.addClass("titleStyle");
                         mainContentDivS.append(titleDiv);
                         mainContentDivS.append(image);
@@ -132,7 +134,9 @@ $(document).ready(function () {
             
 
             }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+               var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
+                $("#mainContent").append(warning);
+
             }
         });
 
