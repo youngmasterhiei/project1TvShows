@@ -1,6 +1,6 @@
 body {
     background-color: #1f2833;
-    margin-bottom: 5%;
+    margin-bottom: 9%;
     color: #c5c6c7;
 
    }
@@ -84,11 +84,11 @@ a{
 }
 
 .trendingDiv, .genreDiv, .randomDiv, .searchDiv{
-    width: 225px;
+    width: 200px;
     height: auto;
     float: left;
-    margin-left: 80px;
-    margin-right: 20px;
+    margin-left: 16%;
+    /* margin-right: 3%; */
     
     
 }

@@ -49,7 +49,7 @@ $(document).ready(function () {
             var errorMessage = error.message;
             $(".loadingSpinner").hide();
 
-            $("#loginAlerts").append( "\n Invalid Email and Password Combination.");
+            $("#loginAlerts").html( "\n Invalid Email and Password Combination.");
 
         });
 
