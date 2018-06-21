@@ -74,6 +74,9 @@ a{
     color: #1f2833;
     font-size: 18px;
 }
+.gitLink{
+    color: white;
+}
 .purchaseImageResize{
     width: 200px;
     height: auto;
@@ -87,7 +90,7 @@ a{
     width: 200px;
     height: auto;
     float: left;
-    margin-left: 16%;
+    margin-left: 15%;
     /* margin-right: 3%; */
     
     
@@ -152,4 +155,7 @@ a{
 }
 .dynamicText{
     color: #1f2833;
+}
+.watchListStyle{
+    text-decoration: underline;
 }
