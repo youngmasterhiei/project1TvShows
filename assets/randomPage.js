@@ -92,7 +92,7 @@ $(document).ready(function () {
     var randomGenre = genres[Math.floor(Math.random() * genres.length)];
 
     search = randomGenre.id;
-    RandomTvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&with_genres=" + search;
+    RandomTvShowQueryByGenre = "https://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&with_genres=" + search;
 
     callApi();
   }

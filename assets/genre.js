@@ -40,7 +40,7 @@ $(document).ready(function () {
                 $("#previousBtn").show();
             }
     
-            var tvShowQueryByGenre = "http://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&page=" + j + "&sort_by=popularity.desc&with_genres=" + genreSearchTerm;
+            var tvShowQueryByGenre = "https://api.themoviedb.org/3/discover/tv?api_key=3b90c41cf16ced55f6bcaedd7b858cb5&page=" + j + "&sort_by=popularity.desc&with_genres=" + genreSearchTerm;
 
         $.ajax({
             url: tvShowQueryByGenre,
