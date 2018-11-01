@@ -119,7 +119,7 @@ $(document).ready(function () {
                         mainContentDivG.addClass("genreDivClick");
                         $("#mainContent").append(mainContentDivG);
 
-                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Reviews</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        var altNav = $("<a class='altNavButtons current' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
                         $("#mainContent").append(addToWatchListButton);
 
                         $("#altNavPosition").append(altNav);
@@ -161,7 +161,7 @@ $(document).ready(function () {
     $(document).on("click", "#reviews", function () {
 
         var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
-
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
 
         $.ajax({
             url: tvShowQueryReviews,
@@ -171,7 +171,8 @@ $(document).ready(function () {
                 console.log(response);
                 console.log(response.results.length);
                 if (response.results.length === 0) {
-                    $("#mainContent").html("There are currently no Reviews for the " + test + " please try again later or use google. ");
+                    $("#mainContent").html("There are currently no Reviews for " + test + " please try again later or use google. ");
+
 
                 }
                 else {
@@ -185,7 +186,8 @@ $(document).ready(function () {
                     $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
                     $("#mainContent").append(reviewContent + "<br>" + "<br>");
                 }
-                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>");
+
 
             }
 
@@ -193,18 +195,23 @@ $(document).ready(function () {
             }, error: function () {
                 var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
                 $("#mainContent").append(warning);
+
             }
 
 
 
         });
+        $("#altNavPosition").html(altNav);
+
     });
 
 
+
     $(document).on("click", "#highlights", function () {
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
 
 
-
+        debugger;
 
         $("#mainContent").empty();
 
@@ -228,6 +235,7 @@ $(document).ready(function () {
 
 
 
+        $("#altNavPosition").html(altNav);
 
 
     });
@@ -240,6 +248,7 @@ $(document).ready(function () {
 
 
         var tvShowNewsQuery = "https://newsapi.org/v2/everything?q=" + test + "&sources=bbc-news,entertainment-weekly,buzzfeed,google-news,the-huffington,the-verge,wired-post&apiKey=7d5dfd55160e485e8d9ec889b85e0bef ";
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons ' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
 
         $.ajax({
             url: tvShowNewsQuery,
@@ -269,15 +278,18 @@ $(document).ready(function () {
 
                 }
             }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a NewsAPI programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a newsAPI programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
             }
         });
+        $("#altNavPosition").html(altNav);
+
     });
 
     $(document).on("click", "#purchase", function () {
         $("#mainContent").empty();
 
         var tvShowQueryForId = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons ' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id ='purchase'>Purchase</a>");
 
 
         $.ajax({
@@ -327,7 +339,15 @@ $(document).ready(function () {
                 });
             }
         });
+        $("#altNavPosition").html(altNav);
+
     });
+
+//borrowed from w3schools
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
 
 });

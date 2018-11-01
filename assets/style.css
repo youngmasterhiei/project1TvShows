@@ -1,5 +1,5 @@
 body {
-    background-color: #1f2833;
+    background-color: white;
     margin-bottom: 9%;
     color: #c5c6c7;
 
@@ -8,7 +8,15 @@ body {
 #mainContentContainer{
     background-color:#0b0c10;
     height: auto;
+    margin-top: 5%;
 
+}
+/* background-color: #1f2833; */
+
+
+.logoImage{
+    -webkit-filter: invert(100%); /* Safari/Chrome */
+    filter: invert(100%);
 }
 
 
@@ -17,24 +25,95 @@ footer{
     bottom: 0;
     left: 0;
     right: 0;
-    padding-top: 10px;
-    background-color:#45a29e;
+    padding-top: 1%;
+    background-color: #1f2833;
     text-align: center;
     border-top-style: solid;
     border-top-width: 3;
     border-top-color: #66fcf1;
 }
 .navStyle{
-    margin-bottom: 1%;
-    background-color: #66fcf1;
+    position: fixed;
+    width: 100%;
+    background-color: #1f2833;
     border-bottom-style: solid;
     border-bottom-width: 3;
     border-bottom-color: #66fcf1;
+    z-index: 5;
 }
+
+.linkStyle{
+    color:white !important ;
+}
+.linkStyle:hover{
+    color: #66fcf1 !important;
+    text-decoration: underline;
+}
+
+.navbar-nav .current{
+    color: #66fcf1 !important;
+    text-decoration: underline;
+}
+
+.fullContent{
+margin-top: 5%;
+}
+
 .mainContentStyle{
     margin-top: 4%;
-  
-   
+
+}
+
+
+
+
+.hero1{
+    width: 100%;
+    height: auto;
+    position: relative;
+    right: 53%;
+    top: 150px;
+    margin-left: 22%;
+    z-index: 2;
+
+}
+
+
+.aboutDiv {
+    position: absolute;
+    top: 14%;
+    right:2%;
+    height: 78%;
+    width: 48%;
+    z-index: 1;
+
+
+    background-color: #1f2833;
+}
+
+.aboutParagraph{
+    position: relative;
+    font-size: 26px;
+    font-family: "Koho", sans-serif;
+    font-style: italic;
+    margin-right: 15%;
+    margin-left: 30%;
+    margin-top: 29%;
+    z-index: 2;
+}
+
+.aboutTitle{
+font-size: 69px;
+color: white;
+font-weight: bold;
+font-family: "Koho", sans-serif;
+
+}
+.aboutTitleDiv{
+    position: relative;
+    bottom: 69%;
+    left: 55%;
+    z-index: 5;
 }
 
 .mainContentHeader{
@@ -47,17 +126,25 @@ footer{
     margin-top: 2%;
     cursor: pointer;
 }
+#logInButton{
+    color: white;
+}
 #logInButton:hover{
-    color: #1f2833;
+    color: #66fcf1;
     cursor: pointer;
 }
+#signOut{
+    color: white;
+}
 #signOut:hover{
-    color: #1f2833;
+    color: #66fcf1;
     cursor: pointer;
 }
 .imageStyle {
     width: 300px;
     height: 500px;
+    cursor: pointer;
+
 }
 .float {
     float: left;
@@ -69,9 +156,11 @@ footer{
 }
 .altNavStyle {
     margin-top: 2%;
+    margin-left: 20%;
+    margin-bottom:2%;
 }
 a{
-    color: #1f2833;
+    color: white;
     font-size: 18px;
 }
 .gitLink{
@@ -90,7 +179,7 @@ a{
     width: 200px;
     height: auto;
     float: left;
-    margin-left: 13%;
+    margin-left: 16%;
     /* margin-right: 3%; */
     
     
@@ -129,33 +218,134 @@ a{
     background-color: #45a29e;
     border-color: #1f2833;
 }
-#mainDisplay{
-    background-color: #45a29e;
-    border-color: #1f2833;
+
+.active:after
+
+.altNavButtons{
+    color:white;
 }
-#discussion{
-    background-color: #45a29e;
-    border-color: #1f2833;
+
+.altNavButtons.active::after{
+    text-decoration:underline !important;
+    color:YOUR-LINK-COLOR;
 }
-#news{
-    background-color: #45a29e;
-    border-color: #1f2833;
+
+.altNavButtons:hover{
+    color: #66fcf1 !important;
+    text-decoration:underline !important;
+    cursor: pointer;
+
 }
-#highlights{
-    background-color: #45a29e;
-    border-color: #1f2833;
+
+.current{
+    color: #66fcf1 !important;
+    text-decoration: underline !important;
 }
-#purchase{
-    background-color: #45a29e;
-    border-color: #1f2833;
-}
-#reviews{
-    background-color: #45a29e;
-    border-color: #1f2833;
-}
+
 .dynamicText{
     color: #1f2833;
 }
 .watchListStyle{
     text-decoration: underline;
+    color: white;
+}
+
+.dropup{
+    position: relative;
+    top: 11.7%;
+    right:7%;
+    height: auto;
+    width: 62%;
+background-image: url("../assets/images/darkimage.jpg");
+    z-index: 4;
+    /* border-color: #66fcf1;
+    border-width: .08em;
+    border-style: solid; */
+
+}
+
+.logInButton{
+    position: relative;
+    right: 1%;
+}
+
+
+.logInButton{
+    background-color: #fff;
+    padding: .27em .75em;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #000 !important;
+    margin: 1.99em;
+    z-index: 5;
+}
+
+.callOutButton {
+    background-color: #fff;
+    padding: .27em .75em;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #000 !important;
+    margin: 1.99em;
+    z-index: 5;
+}
+
+.btn-animated {
+    animation: moveInButton .5s ease-out;
+    animation-fill-mode: backwards;
+}
+.btn-callOut:link, .btn-callOut:visited {
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+    position: relative;
+}
+.btn-callOut:hover:after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+}
+.btn-callOut:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+.btn-callOut:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.btn-callOut:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+}
+@keyframes moveInButton{
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    
+}
+
+@keyframes logInButton{
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    
 }

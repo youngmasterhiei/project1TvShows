@@ -112,7 +112,7 @@ else{
                         mainContentDivS.addClass("searchDivClick");
                         $("#mainContent").append(mainContentDivS);
 
-                        var altNav = $("<button id='mainDisplay'>Main</button>" + "<button id = 'reviews'>Reviews</button>" + "<button id = 'news'>News</button>" + "<button id = 'highlights'>Highlights</button>" + "<button id ='purchase'>Purchase</button>");
+                        var altNav = $("<a class='altNavButtons current' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
                         $("#mainContent").append(addToWatchListButton);
 
                         $("#altNavPosition").append(altNav);
@@ -161,7 +161,7 @@ else{
     $(document).on("click", "#reviews", function () {
 
         var tvShowQueryReviews = "https://api.themoviedb.org/3/tv/" + showId + "/reviews?api_key=3b90c41cf16ced55f6bcaedd7b858cb5";
-
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
 
         $.ajax({
             url: tvShowQueryReviews,
@@ -171,7 +171,8 @@ else{
                 console.log(response);
                 console.log(response.results.length);
                 if (response.results.length === 0) {
-                    $("#mainContent").html("There are currently no Reviews for the " + test + " please try again later or use google. ");
+                    $("#mainContent").html("There are currently no Reviews for " + test + " please try again later or use google. ");
+
 
                 }
                 else {
@@ -185,7 +186,8 @@ else{
                     $("#mainContent").append("<strong>" + "Author: " + author + " " + "</strong>");
                     $("#mainContent").append(reviewContent + "<br>" + "<br>");
                 }
-                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>")
+                $("#mainContent").prepend("<h3>The Movie Database Reviews</h3>");
+
 
             }
 
@@ -193,25 +195,23 @@ else{
             }, error: function () {
                 var warning = $("<h5><strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a TMDB programmer is working hard to figure it out, please try again later.</strong></h5>").addClass("text-danger");
                 $("#mainContent").append(warning);
+
             }
 
 
 
         });
+        $("#altNavPosition").html(altNav);
+
     });
 
 
 
-
-
-
-
-
-
     $(document).on("click", "#highlights", function () {
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
 
 
-
+        debugger;
 
         $("#mainContent").empty();
 
@@ -235,6 +235,7 @@ else{
 
 
 
+        $("#altNavPosition").html(altNav);
 
 
     });
@@ -247,6 +248,7 @@ else{
 
 
         var tvShowNewsQuery = "https://newsapi.org/v2/everything?q=" + test + "&sources=bbc-news,entertainment-weekly,buzzfeed,google-news,the-huffington,the-verge,wired-post&apiKey=7d5dfd55160e485e8d9ec889b85e0bef ";
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons ' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id ='purchase'>Purchase</a>");
 
         $.ajax({
             url: tvShowNewsQuery,
@@ -254,37 +256,40 @@ else{
             success: function (response) {
                 for (var i = 0; i < 7; i++) {
 
-                    if (response.totalResults === 0) {
+                    if(response.totalResults === 0){
                         $("#mainContent").html("There are currently no News Articles for the " + test + " please try again later or use google. " + "<h5 class='text-danger'>This message will self destruct in 5 seconds.</h5> ");
 
                     }
                     else {
 
+                   
+                    var articleTitle = response.articles[i].title;
+                    var articleDescription = response.articles[i].description;
+                    var articleUrl = response.articles[i].url;
+                    var mainContentDiv = $("<div>");
+                    var articleListItem = $("<li>");
+                    var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a><br><br>");
+                    $(mainContentDiv).append(" <li><strong>Title: </strong>" + "<u>" + articleTitle + "</u>" + "<br></li>");
+                    $(mainContentDiv).append(articleDescription + "<br>");
 
-                        var articleTitle = response.articles[i].title;
-                        var articleDescription = response.articles[i].description;
-                        var articleUrl = response.articles[i].url;
-                        var mainContentDiv = $("<div>");
-                        var articleListItem = $("<li>");
-                        var link = $("<a href = '" + articleUrl + "' target = 'blank'>Read More</a><br><br>");
-                        $(mainContentDiv).append(" <li><strong>Title: </strong>" + "<u>" + articleTitle + "</u>" + "<br></li>");
-                        $(mainContentDiv).append(articleDescription + "<br>");
-
-                        $(mainContentDiv).append(link);
-                        $("#mainContent").append(mainContentDiv);
+                    $(mainContentDiv).append(link);
+                    $("#mainContent").append(mainContentDiv);
                     }
 
                 }
             }, error: function () {
-                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a NewsAPI programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
+                $("#mainContent").html("<strong>Were going to give it to you straight, something went wrong with the api, were not sure what, but i promise a newsAPI programmer is working hard to figure it out, please try again later.</strong>").addClass("text-danger");
             }
         });
+        $("#altNavPosition").html(altNav);
+
     });
 
     $(document).on("click", "#purchase", function () {
         $("#mainContent").empty();
 
         var tvShowQueryForId = "https://itunes.apple.com/search?term=" + test + "&media=tvShow&entity=tvSeason";
+        var altNav = $("<a class='altNavButtons active' id='mainDisplay'>Main</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'reviews'>Reviews</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons' id = 'news'>News</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons ' id = 'highlights'>Highlights</a>" + '&nbsp | &nbsp' + "<a class='altNavButtons current' id ='purchase'>Purchase</a>");
 
 
         $.ajax({
@@ -334,14 +339,15 @@ else{
                 });
             }
         });
+        $("#altNavPosition").html(altNav);
+
     });
 
-
+//borrowed from w3schools
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
 
 });
-
-
-
-
-
