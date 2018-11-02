@@ -42,6 +42,8 @@ footer{
     border-top-style: solid;
     border-top-width: 3;
     border-top-color: #66fcf1;
+    z-index: 5;
+
 }
 
 
@@ -80,7 +82,6 @@ margin-top: 5%;
 .indexDisplay{
     width: 100%;
     height: auto;
-    margin-top: 1%;
 
 }
 
