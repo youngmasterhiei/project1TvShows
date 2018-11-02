@@ -20,6 +20,17 @@ body {
 }
 
 
+
+
+  .modal {
+      
+    margin-top: 10%;
+    z-index: 2000;
+  }
+
+  .modal-backdrop {
+    z-index: -1;
+  }
 footer{
     position: fixed;
     bottom: 0;
@@ -32,6 +43,8 @@ footer{
     border-top-width: 3;
     border-top-color: #66fcf1;
 }
+
+
 .navStyle{
     position: fixed;
     width: 100%;
@@ -110,6 +123,7 @@ font-size: 69px;
 color: white;
 font-weight: bold;
 font-family: "Koho", sans-serif;
+text-decoration: underline;
 
 }
 .aboutTitleDiv{
@@ -118,6 +132,8 @@ font-family: "Koho", sans-serif;
     left: 55%;
     z-index: 5;
 }
+
+
 
 .mainContentHeader{
     text-align: center;
@@ -178,6 +194,10 @@ a{
     margin-top: 10px;
 }
 
+.searchForm{
+    width: 100%;
+}
+
 .trendingDiv, .genreDiv, .randomDiv, .searchDiv{
     width: 200px;
     height: auto;
@@ -218,8 +238,17 @@ a{
     100% { transform: rotate(360deg); }
 }
 #addToWatchList{
-    background-color: #45a29e;
-    border-color: #1f2833;
+    background-color: #fff;
+    padding: .27em .75em;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #000 !important;
+    z-index: 5;
+    border-color: #66fcf1;
+    border-width: .1em;
+    border-style: solid;
+    cursor: pointer;
+    margin-bottom: .7em;
 }
 
 .active:after
@@ -250,7 +279,11 @@ a{
 }
 .watchListStyle{
     text-decoration: underline;
-    color: white;
+    color: #1f2833;
+}
+
+#watchList{
+    background-color: #1f2833;
 }
 
 .dropup{
@@ -291,6 +324,9 @@ background-image: url("../assets/images/darkimage.jpg");
     color: #000 !important;
     margin: 1.99em;
     z-index: 5;
+    border-color: #66fcf1;
+    border-width: .1em;
+    border-style: solid;
 }
 
 .btn-animated {

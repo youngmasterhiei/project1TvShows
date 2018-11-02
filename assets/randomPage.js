@@ -164,8 +164,8 @@ $(document).ready(function () {
           var watchListName = title;
          localStorage.setItem("title", watchListName);
 
-          var addToWatchListButton = $("<button id='addToWatchList'>Add to Watchlist</button>");
-
+          var addToWatchListButton = $("<button id='addToWatchList' >Add to Watchlist</button>");
+          addToWatchListButton.addClass("");
           var mainContentDivR = $("<div>");
           var titleDiv = $("<h3>"+title+"</h3>");
           titleDiv.addClass("titleStyle");
